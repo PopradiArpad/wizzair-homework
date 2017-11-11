@@ -1,0 +1,9 @@
+//TODO: import only the needed files from bulma
+@import "../node_modules/bulma/bulma.sass";
+@import "./components/app/app";
+@import "./components/datelabel/datelabel";
+
+body {
+  margin: 0;
+  padding: 0;
+}
