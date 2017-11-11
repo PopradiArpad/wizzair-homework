@@ -1,12 +1,21 @@
 ## Development
-1. start development server
-```
-npm start
-```
-2. start scss to css conversion
+1. start scss to css conversion
 ```
 npm run watch-css
 ```
+2. start development server
+```
+npm start
+```
+
+## Build css from scss/sass
+Add the following lines to __"scripts"__ in __package.json__:
+```
+"build-css": "node-sass-chokidar --indented-syntax src/ -o src/",
+"watch-css": "npm run build-css && node-sass-chokidar --indented-syntax src/ -o src/ --watch --recursive",
+```
+The option __--indented-syntax__ is causes to include freely __sass__ and __scss__ syntax files.
+
 
 ## Organisation of styling
 Each component get an own `scss` file started with underscore.
