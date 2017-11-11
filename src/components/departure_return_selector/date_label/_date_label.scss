@@ -1,0 +1,19 @@
+.fuiDateLabel {
+  @extend .label;
+  display: inline-block;
+  vertical-align: top;
+  width: 7rem;
+  height: 3rem;
+  margin: 1rem;
+}
+
+.fuiDateLabel__label {
+  @extend .is-size-7;
+  @extend .has-text-left;
+  @extend .has-text-grey-light;
+}
+
+.fuiDateLabel__date {
+  @extend .is-size-6;
+  @extend .has-text-left;
+}

@@ -2,25 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import momentPropTypes from 'react-moment-proptypes';
-import './_datelabel.scss';
 
-const DateLabel = ({
+export const DateLabel = ({
   className,
-  children,
   date,
-  text,
+  label,
+  onClick,
   ...rest
 }) => {
   const classes = classNames('fuiDateLabel', className);
-  const textElement = text ? (<div className="fuiDateLabel__text">{text}</div>) : null;
-  const dateElement = date ? (<div className="is-size-6">{date.format("D MMM YYYY")}</div>) : null;
+  const labelElement = <div className="fuiDateLabel__label">{label}</div>;
+  const dateText = date ? date.format("D MMM YYYY") : "";
+  const dateElement = <div className="fuiDateLabel__date">{dateText}</div>;
 
   return (
     <label
       className={classes}
+      onClick={onClick}
       {...rest}
     >
-      {textElement}
+      {labelElement}
       {dateElement}
     </label>
   );
@@ -29,7 +30,6 @@ const DateLabel = ({
 DateLabel.propTypes = {
   className: PropTypes.string,
   date: momentPropTypes.momentObj,
-  text: PropTypes.string,
+  label: PropTypes.string,
+  onClick: PropTypes.func,
 };
-
-export default DateLabel;

@@ -1,7 +1,12 @@
 //TODO: import only the needed files from bulma
 @import "../node_modules/bulma/bulma.sass";
-@import "./components/app/app";
-@import "./components/datelabel/datelabel";
+@import "./components/index";
+
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;

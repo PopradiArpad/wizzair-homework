@@ -1,0 +1,12 @@
+.fuiDepartureReturnSelector {
+  @extend .box;
+}
+
+.fuiDepartureReturnSelector__date_labels {
+  @extend .level;
+  display: inline-block;
+  border-color: $primary;
+  border-radius: 5px;
+  border-width: 2px;
+  border-style: solid;
+}
