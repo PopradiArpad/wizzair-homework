@@ -8,76 +8,34 @@ import 'react-dates/initialize';
 import { DayPickerRangeController } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment';
+import { connect } from 'react-redux';
+import {DEPARTURE_DATE, RETURN_DATE} from '../../constants';
 
-//react-dates constants
-const START_DATE = 'startDate';
-const END_DATE = 'endDate';
-
-export class DepartureReturnSelector extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      showDateRangeSelector: false,
-      focusedInput: START_DATE
-    };
-  }
-
-  onDepartureLabelClick = () => {
-    console.log('onDepartureLabelClick');
-    this.setState({ showDateRangeSelector: true, focusedInput: START_DATE });
-  };
-
-  onReturnLabelClick = () => {
-    console.log('onReturnLabelClick');
-    this.setState({ showDateRangeSelector: true, focusedInput: END_DATE });
-  };
-
-  onDatesChange = ({ startDate, endDate }) => {
-    console.log('onDatesChange');
-    this.props.onDatesChange(startDate, endDate);
-  };
-
-  onFocusChange = focusedInput => {
-    //react-dates focuses itself to the next state automatically:
-    // after START_DATE it focuses to END_DATE
-    // after END_DATE it focuses to null
-    //null means nothing to select and nothing is selectable
-    //Our state machine is this
-    // after START_DATE it focuses to END_DATE and it stays in END_DATE
-    this.setState({
-      focusedInput:this.state.focusedInput === END_DATE ? END_DATE : focusedInput
-    });
-  };
-
-  onCloseDateRangeSelector = () => {
-    this.setState({ showDateRangeSelector: false });
-  };
-
+//This is a stateless component with some methods.
+class DepartureReturnSelectorI extends Component {
   onOneWaySelected = () => {
-    this.onDatesChange({ startDate: this.props.departureDate });
+    const props = this.props;
+
+    props.onDatesChange({ startDate: props.departureDate, endDate: null });
   };
 
   isDayBlocked = day => {
-    function isBeforeToday(day){
-      const now = moment();
-      return day < now.day(-1);
-    }
+    const props = this.props;
 
-    if (this.state.focusedInput === START_DATE) {
+    if (props.focusedInput === DEPARTURE_DATE) {
       return isBeforeToday(day);
     }
 
-    return day < this.props.departureDate || isBeforeToday(day);
-  }
+    return day < props.departureDate || isBeforeToday(day);
+  };
 
   render() {
+    console.log('render');
+    const props = this.props;
     const classes = classNames(
       'waDepartureReturnSelector',
-      this.props.className
+      props.className
     );
-    const props = this.props;
-    const state = this.state;
 
     return (
       <div className={classes}>
@@ -86,22 +44,22 @@ export class DepartureReturnSelector extends Component {
             <DateLabel
               date={props.departureDate}
               label="Departure"
-              onClick={this.onDepartureLabelClick}
+              onClick={props.onDepartureLabelClick}
             />
             <DateLabel
               date={props.returnDate}
               label="Return"
-              onClick={this.onReturnLabelClick}
+              onClick={props.onReturnLabelClick}
             />
           </div>
         </div>
-        {state.showDateRangeSelector && (
+        {props.showDateRangeSelector && (
           <div className="waDepartureReturnSelector__date_range_selector">
             <div className="card">
               <header className="card-header">
                 <p className="card-header-title">
                   Select{' '}
-                  {state.focusedInput === START_DATE
+                  {props.focusedInput === DEPARTURE_DATE
                     ? 'departure'
                     : 'return'}{' '}
                   date
@@ -111,9 +69,8 @@ export class DepartureReturnSelector extends Component {
                 <DayPickerRangeController
                   startDate={props.departureDate}
                   endDate={props.returnDate}
-                  onDatesChange={this.onDatesChange}
-                  focusedInput={state.focusedInput}
-                  onFocusChange={this.onFocusChange}
+                  onDatesChange={props.onDatesChange}
+                  focusedInput={props.focusedInput}
                   numberOfMonths={2}
                   isDayBlocked={this.isDayBlocked}
                 />
@@ -124,7 +81,7 @@ export class DepartureReturnSelector extends Component {
                 </a>
                 <a
                   className="card-footer-item button is-primary is-large"
-                  onClick={this.onCloseDateRangeSelector}
+                  onClick={props.onCloseDateRangeSelector}
                 >
                   OK
                 </a>
@@ -137,9 +94,57 @@ export class DepartureReturnSelector extends Component {
   }
 }
 
-DepartureReturnSelector.propTypes = {
+DepartureReturnSelectorI.propTypes = {
   className: PropTypes.string,
   departureDate: momentPropTypes.momentObj,
   returnDate: momentPropTypes.momentObj, //null means OneWay
-  onDatesChange: PropTypes.func.isRequired,
+  showDateRangeSelector: PropTypes.bool,
+  focusedInput: PropTypes.oneOf([DEPARTURE_DATE, RETURN_DATE])
 };
+
+function isBeforeToday(day) {
+  const now = moment();
+  return day < now.day(-1);
+}
+
+const mapStateToProps = state => {
+  console.log('mapStateToProps state',state);
+  return {
+    departureDate: state.departureDate,
+    returnDate: state.returnDate,
+    showDateRangeSelector: state.showDateRangeSelector,
+    focusedInput: state.focusedInput,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onDepartureLabelClick: () => {
+      console.log('onDepartureLabelClick');
+      dispatch({ type: 'SELECT_DEPARTURE_DATE' });
+    },
+
+    onReturnLabelClick: () => {
+      console.log('onReturnLabelClick');
+      dispatch({ type: 'SELECT_RETURN_DATE' });
+    },
+
+    onDatesChange: ({ startDate, endDate }) => {
+      console.log('onDatesChange');
+      dispatch({
+        type: 'CHANGE_DATE',
+        departureDate: startDate,
+        returnDate: endDate
+      });
+    },
+
+    onCloseDateRangeSelector: () => {
+      dispatch({ type: 'CLOSE_DATE_RANGE_SELECTOR' });
+    }
+  };
+};
+
+export const DepartureReturnSelector = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DepartureReturnSelectorI);
