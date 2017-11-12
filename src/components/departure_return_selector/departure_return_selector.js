@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import momentPropTypes from 'react-moment-proptypes';
 import classNames from 'classnames';
@@ -9,42 +9,49 @@ import 'react-dates/lib/css/_datepicker.css';
 import { connect } from 'react-redux';
 import { DEPARTURE_DATE, RETURN_DATE } from '../../constants';
 
-//This is a stateless component with some methods.
-class DepartureReturnSelectorI extends Component {
-  render() {
-    console.log('DepartureReturnSelectorI render');
-    const props = this.props;
-    const classes = classNames('waDepartureReturnSelector', props.className);
+const DepartureReturnSelectorI = ({
+  className,
+  departureDate,
+  onDepartureLabelClick,
+  returnDate,
+  onReturnLabelClick,
+  focusedInput,
+  onDatesChange,
+  onCloseDateRangeSelector,
+  showDateRangeSelector,
+  ...rest
+}) => {
+  console.log('DepartureReturnSelectorI render');
+  const classes = classNames('waDepartureReturnSelector', className);
 
-    return (
-      <div className={classes}>
-        <div className="column is-one-quarter">
-          <div className="waDepartureReturnSelector__date_labels">
-            <DateLabel
-              date={props.departureDate}
-              label="Departure"
-              onClick={props.onDepartureLabelClick}
-            />
-            <DateLabel
-              date={props.returnDate}
-              label="Return"
-              onClick={props.onReturnLabelClick}
-            />
-          </div>
-        </div>
-        {props.showDateRangeSelector && (
-          <DateRangeSelector
-            departureDate={props.departureDate}
-            returnDate={props.returnDate}
-            focusedInput={props.focusedInput}
-            onDatesChange={props.onDatesChange}
-            onCloseDateRangeSelector={props.onCloseDateRangeSelector}
+  return (
+    <div className={classes} {...rest}>
+      <div className="column is-one-quarter">
+        <div className="waDepartureReturnSelector__date_labels">
+          <DateLabel
+            date={departureDate}
+            label="Departure"
+            onClick={onDepartureLabelClick}
           />
-        )}
+          <DateLabel
+            date={returnDate}
+            label="Return"
+            onClick={onReturnLabelClick}
+          />
+        </div>
       </div>
-    );
-  }
-}
+      {showDateRangeSelector && (
+        <DateRangeSelector
+          departureDate={departureDate}
+          returnDate={returnDate}
+          focusedInput={focusedInput}
+          onDatesChange={onDatesChange}
+          onCloseDateRangeSelector={onCloseDateRangeSelector}
+        />
+      )}
+    </div>
+  );
+};
 
 DepartureReturnSelectorI.propTypes = {
   className: PropTypes.string,
