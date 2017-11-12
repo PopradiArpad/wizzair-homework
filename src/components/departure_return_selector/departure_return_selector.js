@@ -40,7 +40,7 @@ const DepartureReturnSelectorI = ({
           />
         </div>
       </div>
-      {showDateRangeSelector && (
+      {showDateRangeSelector &&
         <DateRangeSelector
           departureDate={departureDate}
           returnDate={returnDate}
@@ -48,7 +48,7 @@ const DepartureReturnSelectorI = ({
           onDatesChange={onDatesChange}
           onCloseDateRangeSelector={onCloseDateRangeSelector}
         />
-      )}
+      }
     </div>
   );
 };
