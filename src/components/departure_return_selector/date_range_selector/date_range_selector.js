@@ -1,35 +1,29 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import momentPropTypes from 'react-moment-proptypes';
 import 'react-dates/initialize';
 import { DayPickerRangeController } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
+import {DEPARTURE_DATE, RETURN_DATE} from '../../../constants';
+import moment from 'moment';
 
-const START_DATE = 'startDate';
-
+//This is a stateless component with some methods.
 export class DateRangeSelector extends Component {
-  constructor(props) {
-    super(props);
+  onOneWaySelected = () => {
+    const props = this.props;
 
-    this.state = {
-      focusedInput: START_DATE,
-      startDate: null,
-      endDate: null,
-    };
-  }
-
-  onDatesChange = ({ startDate, endDate }) => {
-    console.log('onDatesChange ',JSON.stringify({ startDate, endDate }));
-    this.setState({ startDate, endDate });
-    this.props.onDatesChange(startDate, endDate);
+    props.onDatesChange({ startDate: props.departureDate, endDate: null });
   };
 
-  onFocusChange = focusedInput => {
-    console.log('onFocusChange focusedInput:',focusedInput);
-    this.setState({
-      // Force the focusedInput to always be truthy so that dates are always selectable
-      focusedInput: !focusedInput ? START_DATE : focusedInput,
-    });
+  isDayBlocked = day => {
+    const props = this.props;
+
+    if (props.focusedInput === DEPARTURE_DATE) {
+      return isBeforeToday(day);
+    }
+
+    return day < props.departureDate || isBeforeToday(day);
   };
 
   render() {
@@ -38,21 +32,44 @@ export class DateRangeSelector extends Component {
       this.props.className
     );
 
-    const { focusedInput, startDate, endDate } = this.state;
-
-    console.log('render');
-    console.log('  ',JSON.stringify({ focusedInput, startDate, endDate }));
+    const props = this.props;
 
     return (
       <div className={classes}>
-        <DayPickerRangeController
-          startDate={startDate}
-          endDate={endDate}
-          onDatesChange={this.onDatesChange}
-          focusedInput={focusedInput}
-          onFocusChange={this.onFocusChange}
-          numberOfMonths={2}
-        />
+        <div className="waDepartureReturnSelector__date_range_selector">
+          <div className="card">
+            <header className="card-header">
+              <p className="card-header-title">
+                Select{' '}
+                {props.focusedInput === DEPARTURE_DATE
+                  ? 'departure'
+                  : 'return'}{' '}
+                date
+              </p>
+            </header>
+            <div className="card-content">
+              <DayPickerRangeController
+                startDate={props.departureDate}
+                endDate={props.returnDate}
+                focusedInput={props.focusedInput}
+                onDatesChange={props.onDatesChange}
+                numberOfMonths={2}
+                isDayBlocked={this.isDayBlocked}
+              />
+            </div>
+            <footer className="card-footer">
+              <a className="card-footer-item" onClick={this.onOneWaySelected}>
+                ONE WAY ONLY
+              </a>
+              <a
+                className="card-footer-item button is-primary is-large"
+                onClick={props.onCloseDateRangeSelector}
+              >
+                OK
+              </a>
+            </footer>
+          </div>
+        </div>
       </div>
     );
   }
@@ -60,5 +77,14 @@ export class DateRangeSelector extends Component {
 
 DateRangeSelector.propTypes = {
   className: PropTypes.string,
+  departureDate: momentPropTypes.momentObj,
+  returnDate:momentPropTypes.momentObj,
+  focusedInput: PropTypes.oneOf([DEPARTURE_DATE, RETURN_DATE]),
   onDatesChange: PropTypes.func.isRequired,
+  onCloseDateRangeSelector: PropTypes.func.isRequired,
 };
+
+function isBeforeToday(day) {
+  const now = moment();
+  return day < now.day(-1);
+}
