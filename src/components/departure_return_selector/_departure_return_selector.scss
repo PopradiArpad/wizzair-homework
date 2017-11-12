@@ -1,12 +1,16 @@
-.fuiDepartureReturnSelector {
+.waDepartureReturnSelector {
+  @extend .columns;
   @extend .box;
 }
 
-.fuiDepartureReturnSelector__date_labels {
-  @extend .level;
+.waDepartureReturnSelector__date_labels {
   display: inline-block;
   border-color: $primary;
   border-radius: 5px;
   border-width: 2px;
   border-style: solid;
+}
+
+.waDepartureReturnSelector__date_range_selector {
+  @extend .column;
 }

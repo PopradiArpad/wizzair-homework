@@ -7,13 +7,14 @@ export const DateLabel = ({
   className,
   date,
   label,
+  active,
   onClick,
   ...rest
 }) => {
-  const classes = classNames('fuiDateLabel', className);
-  const labelElement = <div className="fuiDateLabel__label">{label}</div>;
-  const dateText = date ? date.format("D MMM YYYY") : "";
-  const dateElement = <div className="fuiDateLabel__date">{dateText}</div>;
+  const classes = classNames('waDateLabel', className);
+  const labelElement = <div className="waDateLabel__label">{label}</div>;
+  const dateText = date ? date.format("D MMM YYYY") : "One way";
+  const dateElement = <div className="waDateLabel__date">{dateText}</div>;
 
   return (
     <label
@@ -29,7 +30,7 @@ export const DateLabel = ({
 
 DateLabel.propTypes = {
   className: PropTypes.string,
-  date: momentPropTypes.momentObj,
+  date: momentPropTypes.momentObj,//null means OneWay
   label: PropTypes.string,
   onClick: PropTypes.func,
 };

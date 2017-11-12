@@ -1,4 +1,4 @@
-.fuiDateLabel {
+.waDateLabel {
   @extend .label;
   display: inline-block;
   vertical-align: top;
@@ -7,13 +7,21 @@
   margin: 1rem;
 }
 
-.fuiDateLabel__label {
+.waDateLabel__label {
   @extend .is-size-7;
   @extend .has-text-left;
   @extend .has-text-grey-light;
 }
 
-.fuiDateLabel__date {
+.waDateLabel__date {
   @extend .is-size-6;
   @extend .has-text-left;
+}
+
+.waDateLabel--active {
+  color: $primary;
+  
+  .waDateLabel__label {
+    color: $primary
+  }
 }

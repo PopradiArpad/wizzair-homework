@@ -34,7 +34,7 @@ export class DateRangeSelector extends Component {
 
   render() {
     const classes = classNames(
-      'fuiDateRangSelector',
+      'waDateRangSelector',
       this.props.className
     );
 
