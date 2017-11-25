@@ -7,7 +7,10 @@ import { createStore } from 'redux';
 import { dateReducer } from './reducers/date_reducer';
 import { Provider } from 'react-redux';
 
-let store = createStore(dateReducer);
+let store = createStore(
+  dateReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 ReactDOM.render(
   <Provider store={store}>
