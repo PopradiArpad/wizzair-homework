@@ -8,7 +8,9 @@ import {
   SELECT_DEPARTURE_DATE,
   SELECT_RETURN_DATE,
   CLOSE_DATE_RANGE_SELECTOR,
-  CHANGE_DATE
+  CHANGE_DATE,
+  SELECT_ORIGIN_AIRPORT,
+  SELECT_DESTINATION_AIRPORT,
 } from '../../actions';
 
 const FlightSearchI = ({
@@ -80,17 +82,14 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onDepartureLabelClick: () => {
-      // console.log('onDepartureLabelClick');
       dispatch({ type: SELECT_DEPARTURE_DATE });
     },
 
     onReturnLabelClick: () => {
-      // console.log('onReturnLabelClick');
       dispatch({ type: SELECT_RETURN_DATE });
     },
 
     onDatesChange: ({ startDate, endDate }) => {
-      console.log('onDatesChange');
       dispatch({
         type: CHANGE_DATE,
         departureDate: startDate,
@@ -100,6 +99,14 @@ const mapDispatchToProps = dispatch => {
 
     onCloseDateRangeSelector: () => {
       dispatch({ type: CLOSE_DATE_RANGE_SELECTOR });
+    },
+
+    onOriginAirportClick: () => {
+      dispatch({ type: SELECT_ORIGIN_AIRPORT });
+    },
+
+    onDestinationAirportClick: () => {
+      dispatch({ type: SELECT_DESTINATION_AIRPORT });
     }
   };
 };

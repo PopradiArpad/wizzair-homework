@@ -7,7 +7,9 @@ import {
   SELECT_DEPARTURE_DATE,
   SELECT_RETURN_DATE,
   CLOSE_DATE_RANGE_SELECTOR,
-  CHANGE_DATE
+  CHANGE_DATE,
+  SELECT_ORIGIN_AIRPORT,
+  SELECT_DESTINATION_AIRPORT,
 } from '../actions';
 
 const defaultState = {
@@ -31,6 +33,10 @@ export function flightSearchReducer(state = defaultState, action) {
       return closeDateRangeSelector(state);
     case CHANGE_DATE:
       return changeDate(state, action.departureDate, action.returnDate);
+    case SELECT_ORIGIN_AIRPORT:
+      return selectOriginAirport(state);
+    case SELECT_DESTINATION_AIRPORT:
+      return selectDestinationAirport(state);
     default:
       return state;
   }
@@ -62,4 +68,14 @@ function changeDate(state, departureDate, returnDate) {
     returnDate,
     focusedInput
   });
+}
+
+function selectOriginAirport(state) {
+  console.log('selectOriginAirport');
+  return state;
+}
+
+function selectDestinationAirport(state) {
+  console.log('selectDestinationAirport');
+  return state;
 }

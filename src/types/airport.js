@@ -8,7 +8,7 @@ Airport.PropType = function AirportPropType(props, propName, componentName) {
   if (
     !(
       typeof obj === 'object' &&
-      typeof obj.airport === 'string' &&
+      typeof obj.city === 'string' &&
       typeof obj.iata === 'string'
     )
   ) {
