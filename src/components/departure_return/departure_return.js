@@ -17,7 +17,7 @@ export const DepartureReturn = ({
 
   return (
     <div className={classes} {...rest}>
-      <div className="column is-one-quarter">
+      <div className="column">
         <div className="waDepartureReturn__date_labels">
           <DateLabel
             date={departureDate}

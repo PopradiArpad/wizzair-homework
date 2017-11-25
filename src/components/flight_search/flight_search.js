@@ -28,13 +28,14 @@ const FlightSearchI = ({
     <div className={classes} {...rest}>
       <h1 className="title">Flights</h1>
       <div className="columns">
-        <div className="column">
+        <div className="column is-one-third">
           <DepartureReturn
             departureDate={departureDate}
             onDepartureLabelClick={onDepartureLabelClick}
             returnDate={returnDate}
             onReturnLabelClick={onReturnLabelClick}
           />
+          <button className="button is-primary is-large">Search</button>
         </div>
         <div className="column">
           {showDateRangeSelector && (
@@ -48,7 +49,6 @@ const FlightSearchI = ({
           )}
         </div>
       </div>
-      <button className="button is-primary is-large">Search</button>
     </div>
   );
 };
