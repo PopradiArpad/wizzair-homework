@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Airport from '../../../types/airport';
+import Airport from '../../types/airport';
 
 export const AirportLabel = ({
   className,

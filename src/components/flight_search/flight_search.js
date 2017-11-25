@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { DepartureReturn } from '../departure_return';
 import { OriginDestination } from '../origin_destination';
 import { DateRangeSelector } from '../date_range_selector';
+import { AirportSelector } from '../airport_selector';
 import {
   SELECT_DEPARTURE_DATE,
   SELECT_RETURN_DATE,
@@ -11,6 +12,8 @@ import {
   CHANGE_DATE,
   SELECT_ORIGIN_AIRPORT,
   SELECT_DESTINATION_AIRPORT,
+  AIRPORT_SELECTED,
+  CLOSE_AIRPORT_SELECTOR
 } from '../../actions';
 
 const FlightSearchI = ({
@@ -23,6 +26,9 @@ const FlightSearchI = ({
   onOriginAirportClick,
   destinationAirport,
   onDestinationAirportClick,
+  airportsToSelect,
+  onAirportSelected,
+  onCloseAirportSelector,
   focusedInput,
   onDatesChange,
   onCloseDateRangeSelector,
@@ -62,6 +68,13 @@ const FlightSearchI = ({
               onCloseDateRangeSelector={onCloseDateRangeSelector}
             />
           )}
+          {airportsToSelect && (
+            <AirportSelector
+              airports={airportsToSelect}
+              onAirportSelected={onAirportSelected}
+              onCloseAirportSelector={onCloseAirportSelector}
+            />
+          )}
         </div>
       </div>
     </div>
@@ -75,6 +88,7 @@ const mapStateToProps = state => {
     showDateRangeSelector: state.showDateRangeSelector,
     originAirport: state.originAirport,
     destinationAirport: state.destinationAirport,
+    airportsToSelect: state.airportsToSelect,
     focusedInput: state.focusedInput
   };
 };
@@ -107,6 +121,17 @@ const mapDispatchToProps = dispatch => {
 
     onDestinationAirportClick: () => {
       dispatch({ type: SELECT_DESTINATION_AIRPORT });
+    },
+
+    onAirportSelected: (airport) => {
+      dispatch({
+        type: AIRPORT_SELECTED,
+        airport
+      });
+    },
+
+    onCloseAirportSelector: () => {
+      dispatch({ type: CLOSE_AIRPORT_SELECTOR });
     }
   };
 };

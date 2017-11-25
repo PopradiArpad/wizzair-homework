@@ -10,17 +10,20 @@ import {
   CHANGE_DATE,
   SELECT_ORIGIN_AIRPORT,
   SELECT_DESTINATION_AIRPORT,
+  AIRPORT_SELECTED,
+  CLOSE_AIRPORT_SELECTOR
 } from '../actions';
 
 const defaultState = {
   //data
   departureDate: moment(),
   returnDate: null, //null means OneWay
-  originAirport: new Airport('Budapest', 'BUD'),//null,
-  destinationAirport: new Airport('Debrecen', 'DEB'),//null,
+  originAirport: new Airport('Budapest', 'BUD'), //null,
+  destinationAirport: new Airport('Debrecen', 'DEB'), //null,
   //view
   showDateRangeSelector: false,
-  focusedInput: null // one of null, DEPARTURE_DATE, RETURN_DATE
+  focusedInput: null, // one of null, DEPARTURE_DATE, RETURN_DATE
+  airportsToSelect: null
 };
 
 export function flightSearchReducer(state = defaultState, action) {
@@ -37,6 +40,10 @@ export function flightSearchReducer(state = defaultState, action) {
       return selectOriginAirport(state);
     case SELECT_DESTINATION_AIRPORT:
       return selectDestinationAirport(state);
+    case AIRPORT_SELECTED:
+      return airportSelected(state, action.airport);
+    case CLOSE_AIRPORT_SELECTOR:
+      return closeAirportSelector(state);
     default:
       return state;
   }
@@ -71,11 +78,43 @@ function changeDate(state, departureDate, returnDate) {
 }
 
 function selectOriginAirport(state) {
-  console.log('selectOriginAirport');
-  return state;
+  var newState = cloneDeep(state);
+  return merge(newState, {
+    airportsToSelect: testAirports
+  });
 }
 
 function selectDestinationAirport(state) {
-  console.log('selectDestinationAirport');
-  return state;
+  var newState = cloneDeep(state);
+  return merge(newState, {
+    airportsToSelect: testAirports
+  });
 }
+
+function airportSelected(state, airport) {
+  console.log('airportSelected',airport);
+  var newState = cloneDeep(state);
+  return merge(newState, {
+    airportsToSelect: null
+  });
+}
+
+function closeAirportSelector(state) {
+  var newState = cloneDeep(state);
+  return merge(newState, {
+    airportsToSelect: null
+  });
+}
+
+const testAirports = [
+  new Airport('Aberdeen', 'ABZ'),
+  new Airport('Alesund', 'AES'),
+  new Airport('Bari', 'BRI'),
+  new Airport('Bergen', 'BGO'),
+  new Airport('Budapest', 'BUD'),
+  new Airport('Bristol', 'BRS'),
+  new Airport('Brno', 'BRQ'),
+  new Airport('Debrecen', 'DEB'),
+  new Airport('Malaga', 'AGP'),
+  new Airport('Milan', 'BGY')
+];
