@@ -1,5 +1,5 @@
-export default function Airport(city, iata) {
-  this.city = city;
+export default function Airport(shortName, iata) {
+  this.shortName = shortName;
   this.iata = iata;
 }
 
@@ -8,7 +8,7 @@ Airport.PropType = function AirportPropType(props, propName, componentName) {
   if (
     !(
       typeof obj === 'object' &&
-      typeof obj.city === 'string' &&
+      typeof obj.shortName === 'string' &&
       typeof obj.iata === 'string'
     )
   ) {

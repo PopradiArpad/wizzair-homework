@@ -13,17 +13,17 @@ export const AirportLabel = ({
 }) => {
   const classes = classNames('waAirportLabel', className);
   const labelElement = <div className="waAirportLabel__label">{label}</div>;
-  let cityElement = null;
+  let shortNameElement = null;
   let iataElement = null;
   if (airport) {
-    cityElement = <div className="waAirportLabel__city">{airport.city}</div>;
+    shortNameElement = <div className="waAirportLabel__shortName">{airport.shortName}</div>;
     iataElement = <div className="waAirportLabel__iata">{airport.iata}</div>;
   }
 
   return (
     <label className={classes} onClick={onClick} {...rest}>
       {labelElement}
-      {cityElement}
+      {shortNameElement}
       {iataElement}
     </label>
   );
