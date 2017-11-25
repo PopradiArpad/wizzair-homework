@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { DepartureReturn } from '../departure_return';
+import { OriginDestination } from '../origin_destination';
 import { DateRangeSelector } from '../date_range_selector';
 import {
   SELECT_DEPARTURE_DATE,
@@ -16,6 +17,10 @@ const FlightSearchI = ({
   onDepartureLabelClick,
   returnDate,
   onReturnLabelClick,
+  originAirport,
+  onOriginAirportClick,
+  destinationAirport,
+  onDestinationAirportClick,
   focusedInput,
   onDatesChange,
   onCloseDateRangeSelector,
@@ -29,13 +34,21 @@ const FlightSearchI = ({
       <h1 className="title">Flights</h1>
       <div className="columns">
         <div className="column is-one-third">
+          <OriginDestination
+            originAirport={originAirport}
+            onOriginAirportClick={onOriginAirportClick}
+            destinationAirport={destinationAirport}
+            onDestinationAirportClick={onDestinationAirportClick}
+          />
           <DepartureReturn
             departureDate={departureDate}
             onDepartureLabelClick={onDepartureLabelClick}
             returnDate={returnDate}
             onReturnLabelClick={onReturnLabelClick}
           />
-          <button className="button is-primary is-large">Search</button>
+          <div>
+            <button className="button is-primary is-large">Search</button>
+          </div>
         </div>
         <div className="column">
           {showDateRangeSelector && (
@@ -58,6 +71,8 @@ const mapStateToProps = state => {
     departureDate: state.departureDate,
     returnDate: state.returnDate,
     showDateRangeSelector: state.showDateRangeSelector,
+    originAirport: state.originAirport,
+    destinationAirport: state.destinationAirport,
     focusedInput: state.focusedInput
   };
 };

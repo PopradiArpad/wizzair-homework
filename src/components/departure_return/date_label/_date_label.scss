@@ -1,5 +1,6 @@
 .waDateLabel {
   @extend .label;
+  @extend .has-text-left;
   display: inline-block;
   vertical-align: top;
   width: 7rem;
@@ -9,19 +10,13 @@
 
 .waDateLabel__label {
   @extend .is-size-7;
-  @extend .has-text-left;
   @extend .has-text-grey-light;
 }
 
 .waDateLabel__date {
   @extend .is-size-6;
-  @extend .has-text-left;
 }
 
 .waDateLabel--active {
   color: $primary;
-  
-  .waDateLabel__label {
-    color: $primary
-  }
 }

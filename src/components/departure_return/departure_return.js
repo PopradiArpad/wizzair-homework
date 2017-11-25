@@ -17,20 +17,16 @@ export const DepartureReturn = ({
 
   return (
     <div className={classes} {...rest}>
-      <div className="column">
-        <div className="waDepartureReturn__date_labels">
-          <DateLabel
-            date={departureDate}
-            label="Departure"
-            onClick={onDepartureLabelClick}
-          />
-          <DateLabel
-            date={returnDate}
-            label="Return"
-            onClick={onReturnLabelClick}
-          />
-        </div>
-      </div>
+      <DateLabel
+        date={departureDate}
+        label="Departure"
+        onClick={onDepartureLabelClick}
+      />
+      <DateLabel
+        date={returnDate}
+        label="Return"
+        onClick={onReturnLabelClick}
+      />
     </div>
   );
 };
@@ -40,6 +36,6 @@ DepartureReturn.propTypes = {
   departureDate: momentPropTypes.momentObj,
   returnDate: momentPropTypes.momentObj, //null means OneWay
   onDepartureLabelClick: PropTypes.func.isRequired,
-  onReturnLabelClick: PropTypes.func.isRequired,
+  onReturnLabelClick: PropTypes.func.isRequired
   // focusedInput: PropTypes.oneOf([DEPARTURE_DATE, RETURN_DATE])
 };

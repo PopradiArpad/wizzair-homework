@@ -1,0 +1,34 @@
+.waAirportLabel {
+  @extend .label;
+  @extend .has-text-left;
+  display: inline-block;
+  vertical-align: top;
+  width: 7rem;
+  height: 3rem;
+  margin: 1rem;
+}
+
+.waAirportLabel__label {
+  @extend .is-size-7;
+  @extend .has-text-left;
+  @extend .has-text-grey-light;
+}
+
+.waAirportLabel__city {
+  @extend .is-size-6;
+  display: inline-block;
+}
+
+.waAirportLabel__iata {
+  @extend .is-size-6;
+  @extend .has-text-weight-light;
+  display: inline-block;
+  // margin-left: 1em; doesn't work
+  &::before {
+    content: "\00a0"// non breakable space in CSS
+  }
+}
+
+.waAirportLabel--active {
+  color: $primary;
+}

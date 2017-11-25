@@ -1,3 +1,7 @@
 .waFlightSearch {
   @extend .container;
+
+  .columns .column > * {
+    margin-bottom: 1rem;
+  }
 }

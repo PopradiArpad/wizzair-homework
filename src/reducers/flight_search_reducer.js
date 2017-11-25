@@ -1,6 +1,7 @@
 import moment from 'moment';
 import merge from 'lodash.merge';
 import cloneDeep from 'lodash.clonedeep';
+import Airport from '../types/airport';
 import { DEPARTURE_DATE, RETURN_DATE } from '../constants';
 import {
   SELECT_DEPARTURE_DATE,
@@ -13,6 +14,8 @@ const defaultState = {
   //data
   departureDate: moment(),
   returnDate: null, //null means OneWay
+  originAirport: new Airport('Budapest', 'BUD'),//null,
+  destinationAirport: new Airport('Debrecen', 'DEB'),//null,
   //view
   showDateRangeSelector: false,
   focusedInput: null // one of null, DEPARTURE_DATE, RETURN_DATE
