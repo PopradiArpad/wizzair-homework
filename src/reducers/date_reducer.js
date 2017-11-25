@@ -1,7 +1,13 @@
 import moment from 'moment';
 import merge from 'lodash.merge';
 import cloneDeep from 'lodash.clonedeep';
-import {DEPARTURE_DATE, RETURN_DATE} from '../constants';
+import { DEPARTURE_DATE, RETURN_DATE } from '../constants';
+import {
+  SELECT_DEPARTURE_DATE,
+  SELECT_RETURN_DATE,
+  CLOSE_DATE_RANGE_SELECTOR,
+  CHANGE_DATE
+} from '../actions';
 
 const defaultState = {
   //data
@@ -14,13 +20,13 @@ const defaultState = {
 
 export function dateReducer(state = defaultState, action) {
   switch (action.type) {
-    case 'SELECT_DEPARTURE_DATE':
+    case SELECT_DEPARTURE_DATE:
       return selectDate(state, DEPARTURE_DATE);
-    case 'SELECT_RETURN_DATE':
+    case SELECT_RETURN_DATE:
       return selectDate(state, RETURN_DATE);
-    case 'CLOSE_DATE_RANGE_SELECTOR':
+    case CLOSE_DATE_RANGE_SELECTOR:
       return closeDateRangeSelector(state);
-    case 'CHANGE_DATE':
+    case CHANGE_DATE:
       return changeDate(state, action.departureDate, action.returnDate);
     default:
       return state;

@@ -8,6 +8,12 @@ import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { connect } from 'react-redux';
 import { DEPARTURE_DATE, RETURN_DATE } from '../../constants';
+import {
+  SELECT_DEPARTURE_DATE,
+  SELECT_RETURN_DATE,
+  CLOSE_DATE_RANGE_SELECTOR,
+  CHANGE_DATE
+} from '../../actions';
 
 const DepartureReturnSelectorI = ({
   className,
@@ -75,25 +81,25 @@ const mapDispatchToProps = dispatch => {
   return {
     onDepartureLabelClick: () => {
       console.log('onDepartureLabelClick');
-      dispatch({ type: 'SELECT_DEPARTURE_DATE' });
+      dispatch({ type: SELECT_DEPARTURE_DATE });
     },
 
     onReturnLabelClick: () => {
       console.log('onReturnLabelClick');
-      dispatch({ type: 'SELECT_RETURN_DATE' });
+      dispatch({ type: SELECT_RETURN_DATE });
     },
 
     onDatesChange: ({ startDate, endDate }) => {
       console.log('onDatesChange');
       dispatch({
-        type: 'CHANGE_DATE',
+        type: CHANGE_DATE,
         departureDate: startDate,
         returnDate: endDate
       });
     },
 
     onCloseDateRangeSelector: () => {
-      dispatch({ type: 'CLOSE_DATE_RANGE_SELECTOR' });
+      dispatch({ type: CLOSE_DATE_RANGE_SELECTOR });
     }
   };
 };
