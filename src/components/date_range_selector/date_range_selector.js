@@ -5,7 +5,7 @@ import momentPropTypes from 'react-moment-proptypes';
 import 'react-dates/initialize';
 import { DayPickerRangeController } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import {DEPARTURE_DATE, RETURN_DATE} from '../../../constants';
+import {DEPARTURE_DATE, RETURN_DATE} from '../../constants';
 import moment from 'moment';
 
 //This is a stateless component with some methods.
@@ -86,5 +86,5 @@ DateRangeSelector.propTypes = {
 
 function isBeforeToday(day) {
   const now = moment();
-  return day < now.day(-1);
+  return now.diff(day,'days') > 0;
 }

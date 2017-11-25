@@ -1,16 +1,12 @@
-.waDepartureReturnSelector {
+.waDepartureReturn {
   @extend .columns;
   @extend .box;
 }
 
-.waDepartureReturnSelector__date_labels {
+.waDepartureReturn__date_labels {
   display: inline-block;
   border-color: $primary;
   border-radius: 5px;
   border-width: 2px;
   border-style: solid;
-}
-
-.waDepartureReturnSelector__date_range_selector {
-  @extend .column;
 }

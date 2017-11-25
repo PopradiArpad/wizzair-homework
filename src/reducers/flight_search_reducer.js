@@ -18,7 +18,7 @@ const defaultState = {
   focusedInput: null // one of null, DEPARTURE_DATE, RETURN_DATE
 };
 
-export function dateReducer(state = defaultState, action) {
+export function flightSearchReducer(state = defaultState, action) {
   switch (action.type) {
     case SELECT_DEPARTURE_DATE:
       return selectDate(state, DEPARTURE_DATE);

@@ -4,11 +4,11 @@ import './index.css';
 import { App } from './components/app';
 import registerServiceWorker from './registerServiceWorker';
 import { createStore } from 'redux';
-import { dateReducer } from './reducers/date_reducer';
+import { flightSearchReducer } from './reducers/flight_search_reducer';
 import { Provider } from 'react-redux';
 
 let store = createStore(
-  dateReducer,
+  flightSearchReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
