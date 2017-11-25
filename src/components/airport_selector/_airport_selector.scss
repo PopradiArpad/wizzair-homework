@@ -1,2 +1,27 @@
 .waAirportSelector {
+  width: 14rem;
+
+  & > * {
+    margin-bottom: 1rem;
+  }
+}
+
+.waAirportSelector__airports {
+  height: 20rem;
+  overflow: auto;
+}
+
+.waAirportSelector__airport {
+  width: 13rem;
+  border-bottom-width: 1px;
+  border-bottom-color: black;
+  border-bottom-style: solid;
+  margin: 0px;
+  height: auto;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  &:hover {
+    background-color: $light;
+  }
 }

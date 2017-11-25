@@ -15,13 +15,15 @@ export const AirportSelector = ({
 
   return (
     <div className={classes} {...rest}>
-      <ul>
+      <ul className='waAirportSelector__airports'>
         {airports.map(airport => (
-          <AirportLabel
-            key={airport.iata}
-            airport={airport}
-            onClick={() => onAirportSelected(airport)}
-          />
+          <li key={airport.iata}>
+            <AirportLabel
+              airport={airport}
+              onClick={() => onAirportSelected(airport)}
+              className='waAirportSelector__airport'
+            />
+          </li>
         ))}
       </ul>
       <div>
