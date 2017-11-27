@@ -5,7 +5,7 @@ import momentPropTypes from 'react-moment-proptypes';
 import 'react-dates/initialize';
 import { DayPickerRangeController } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
-import { DEPARTURE_DATE, RETURN_DATE } from '../../constants';
+import Input from '../../types/input';
 import moment from 'moment';
 
 //This is a stateless component with some methods.
@@ -19,7 +19,7 @@ export class DateRangeSelector extends Component {
   isDayBlocked = day => {
     const props = this.props;
 
-    if (props.focusedInput === DEPARTURE_DATE) {
+    if (props.focusedInput === Input.DEPARTURE_DATE) {
       return isBeforeToday(day);
     }
 
@@ -37,7 +37,7 @@ export class DateRangeSelector extends Component {
           <header className="card-header">
             <p className="card-header-title">
               Select{' '}
-              {props.focusedInput === DEPARTURE_DATE
+              {props.focusedInput === Input.DEPARTURE_DATE
                 ? 'departure'
                 : 'return'}{' '}
               date
@@ -74,7 +74,7 @@ DateRangeSelector.propTypes = {
   className: PropTypes.string,
   departureDate: momentPropTypes.momentObj,
   returnDate: momentPropTypes.momentObj,
-  focusedInput: PropTypes.oneOf([DEPARTURE_DATE, RETURN_DATE]),
+  focusedInput: PropTypes.oneOf([Input.DEPARTURE_DATE, Input.RETURN_DATE]),
   onDatesChange: PropTypes.func.isRequired,
   onCloseDateRangeSelector: PropTypes.func.isRequired
 };
@@ -82,4 +82,19 @@ DateRangeSelector.propTypes = {
 function isBeforeToday(day) {
   const now = moment();
   return now.diff(day, 'days') > 0;
+  //Probably this is better:
+  // if (!moment.isMoment(a) || !moment.isMoment(b)) return false;
+  //
+  // const aYear = a.year();
+  // const aMonth = a.month();
+  //
+  // const bYear = b.year();
+  // const bMonth = b.month();
+  //
+  // const isSameYear = aYear === bYear;
+  // const isSameMonth = aMonth === bMonth;
+  //
+  // if (isSameYear && isSameMonth) return a.date() < b.date();
+  // if (isSameYear) return aMonth < bMonth;
+  // return aYear < bYear;
 }

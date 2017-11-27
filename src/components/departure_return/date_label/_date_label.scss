@@ -10,7 +10,7 @@
 
 .waDateLabel__label {
   @extend .is-size-7;
-  @extend .has-text-grey-light;
+  color: $grey-light;
 }
 
 .waDateLabel__date {
@@ -18,5 +18,7 @@
 }
 
 .waDateLabel--active {
-  color: $primary;
+  .waDateLabel__label {
+    color: $primary;
+  }
 }

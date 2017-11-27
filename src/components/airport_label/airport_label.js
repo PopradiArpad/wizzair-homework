@@ -11,12 +11,18 @@ export const AirportLabel = ({
   onClick,
   ...rest
 }) => {
-  const classes = classNames('waAirportLabel', className);
+  const classes = classNames(
+    'waAirportLabel',
+    { 'waAirportLabel--active': active },
+    className
+  );
   const labelElement = <div className="waAirportLabel__label">{label}</div>;
   let shortNameElement = null;
   let iataElement = null;
   if (airport) {
-    shortNameElement = <div className="waAirportLabel__shortName">{airport.shortName}</div>;
+    shortNameElement = (
+      <div className="waAirportLabel__shortName">{airport.shortName}</div>
+    );
     iataElement = <div className="waAirportLabel__iata">{airport.iata}</div>;
   }
 

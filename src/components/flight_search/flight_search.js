@@ -47,12 +47,14 @@ const FlightSearchI = ({
             onOriginAirportClick={onOriginAirportClick}
             destinationAirport={destinationAirport}
             onDestinationAirportClick={onDestinationAirportClick}
+            focusedInput={focusedInput}
           />
           <DepartureReturn
             departureDate={departureDate}
             onDepartureLabelClick={onDepartureLabelClick}
             returnDate={returnDate}
             onReturnLabelClick={onReturnLabelClick}
+            focusedInput={focusedInput}
           />
           <div>
             <button className="button is-primary is-large">Search</button>

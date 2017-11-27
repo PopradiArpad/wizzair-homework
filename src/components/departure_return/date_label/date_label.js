@@ -11,17 +11,17 @@ export const DateLabel = ({
   onClick,
   ...rest
 }) => {
-  const classes = classNames('waDateLabel', className);
+  const classes = classNames(
+    'waDateLabel',
+    { 'waDateLabel--active': active },
+    className
+  );
   const labelElement = <div className="waDateLabel__label">{label}</div>;
-  const dateText = date ? date.format("D MMM YYYY") : "One way";
+  const dateText = date ? date.format('D MMM YYYY') : 'One way';
   const dateElement = <div className="waDateLabel__date">{dateText}</div>;
 
   return (
-    <label
-      className={classes}
-      onClick={onClick}
-      {...rest}
-    >
+    <label className={classes} onClick={onClick} {...rest}>
       {labelElement}
       {dateElement}
     </label>
@@ -30,7 +30,7 @@ export const DateLabel = ({
 
 DateLabel.propTypes = {
   className: PropTypes.string,
-  date: momentPropTypes.momentObj,//null means OneWay
+  date: momentPropTypes.momentObj, //null means OneWay
   label: PropTypes.string,
-  onClick: PropTypes.func,
+  onClick: PropTypes.func
 };

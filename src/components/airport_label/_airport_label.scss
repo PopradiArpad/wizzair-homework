@@ -11,7 +11,7 @@
 .waAirportLabel__label {
   @extend .is-size-7;
   @extend .has-text-left;
-  @extend .has-text-grey-light;
+  color: $grey-light;
 }
 
 .waAirportLabel__shortName {
@@ -25,10 +25,12 @@
   display: inline-block;
   // margin-left: 1em; doesn't work
   &::before {
-    content: "\00a0"// non breakable space in CSS
+    content: '\00a0'; // non breakable space in CSS
   }
 }
 
 .waAirportLabel--active {
-  color: $primary;
+  .waAirportLabel__label {
+    color: $primary;
+  }
 }

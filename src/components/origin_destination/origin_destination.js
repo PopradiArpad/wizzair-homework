@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { AirportLabel } from '../airport_label';
 import Airport from '../../types/airport';
+import Input from '../../types/input';
 
 export const OriginDestination = ({
   className,
@@ -10,7 +11,7 @@ export const OriginDestination = ({
   onOriginAirportClick,
   destinationAirport,
   onDestinationAirportClick,
-  // focusedInput,
+  focusedInput,
   ...rest
 }) => {
   const classes = classNames('waOriginDestination', className);
@@ -21,11 +22,13 @@ export const OriginDestination = ({
         airport={originAirport}
         label="Origin"
         onClick={onOriginAirportClick}
+        active={focusedInput === Input.ORIGIN_AIRPORT}
       />
       <AirportLabel
         airport={destinationAirport}
         label="Destination"
         onClick={onDestinationAirportClick}
+        active={focusedInput === Input.DESTINATION_AIRPORT}
       />
     </div>
   );
@@ -36,6 +39,6 @@ OriginDestination.propTypes = {
   originAirport: Airport.PropType,
   destinationAirport: Airport.PropType,
   onOriginAirportClick: PropTypes.func.isRequired,
-  onDestinationAirportClick: PropTypes.func.isRequired
-  // focusedInput: PropTypes.oneOf([DEPARTURE_DATE, RETURN_DATE])
+  onDestinationAirportClick: PropTypes.func.isRequired,
+  focusedInput: PropTypes.string
 };
