@@ -5,18 +5,23 @@ export default function Airport(shortName, iata) {
   this.iata = iata;
 }
 
-function isAirport(obj) {
+function isAirport(val) {
   return (
-    typeof obj === 'object' &&
-    typeof obj.shortName === 'string' &&
-    typeof obj.iata === 'string'
+    typeof val === 'object' &&
+    !! val && // to filter out null, because typeof null is 'object'
+    typeof val.shortName === 'string' &&
+    typeof val.iata === 'string'
   );
+}
+
+function isAirportOrNull(val) {
+  return (val === null) || isAirport(val);
 }
 
 Airport.PropType = function AirportPropType(props, propName, componentName) {
   const obj = props[propName];
 
-  if (!isAirport(obj)) {
+  if (!isAirportOrNull(obj)) {
     return new Error(
       'Invalid prop `' +
         propName +
@@ -37,7 +42,7 @@ Airport.ArrayPropType = PropTypes.arrayOf(function(
 ) {
   const obj = propValue[key];
 
-  if (!isAirport(obj)) {
+  if (!isAirportOrNull(obj)) {
     return new Error(
       'Invalid prop `' +
         propFullName +
