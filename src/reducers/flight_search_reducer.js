@@ -18,8 +18,8 @@ const defaultState = {
   //data
   departureDate: moment(),
   returnDate: null, //null means OneWay
-  originAirport: new Airport('Budapest', 'BUD'), //null,
-  destinationAirport: new Airport('Debrecen', 'DEB'), //null,
+  originAirport: null,
+  destinationAirport: null,
   //view
   focusedInput: null, // one of null, DEPARTURE_DATE, RETURN_DATE
   showDateRangeSelector: false,
