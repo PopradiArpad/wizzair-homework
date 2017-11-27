@@ -12,10 +12,12 @@ import {
   SELECT_RETURN_DATE,
   CHANGE_DATE,
   CLOSE_DATE_RANGE_SELECTOR,
+  FETCH_STATIONS_SUCCEEDED,
+  FETCH_STATIONS_FAILED
 } from '../actions';
 
 const defaultState = {
-  //data
+  //assistant
   departureDate: moment(),
   returnDate: null, //null means OneWay
   originAirport: null,
@@ -23,8 +25,12 @@ const defaultState = {
   //view
   focusedInput: null, // one of null, DEPARTURE_DATE, RETURN_DATE
   showDateRangeSelector: false,
-  airportsToSelect: null
+  airportsToSelect: null,
+  //api
+  stations: null
 };
+
+let testAirports = null;
 
 export function flightSearchReducer(state = defaultState, action) {
   switch (action.type) {
@@ -44,6 +50,10 @@ export function flightSearchReducer(state = defaultState, action) {
       return changeDate(state, action.departureDate, action.returnDate);
     case CLOSE_DATE_RANGE_SELECTOR:
       return closeDateRangeSelector(state);
+    case FETCH_STATIONS_SUCCEEDED:
+      return fetchStationsSucceeded(state, action.stations);
+    case FETCH_STATIONS_FAILED:
+      return fetchStationsFailed(state);
     default:
       return state;
   }
@@ -88,7 +98,8 @@ function airportSelected(state, airport) {
 function closeAirportSelector(state) {
   var newState = cloneDeep(state);
   return merge(newState, {
-    airportsToSelect: null
+    airportsToSelect: null,
+    focusedInput: null
   });
 }
 
@@ -105,7 +116,7 @@ function closeDateRangeSelector(state) {
   var newState = cloneDeep(state);
   return merge(newState, {
     showDateRangeSelector: false,
-    focusedInput:null
+    focusedInput: null
   });
 }
 
@@ -122,15 +133,22 @@ function changeDate(state, departureDate, returnDate) {
   });
 }
 
-const testAirports = [
-  new Airport('Aberdeen', 'ABZ'),
-  new Airport('Alesund', 'AES'),
-  new Airport('Bari', 'BRI'),
-  new Airport('Bergen', 'BGO'),
-  new Airport('Budapest', 'BUD'),
-  new Airport('Bristol', 'BRS'),
-  new Airport('Brno', 'BRQ'),
-  new Airport('Debrecen', 'DEB'),
-  new Airport('Malaga', 'AGP'),
-  new Airport('Milan', 'BGY')
-];
+function fetchStationsSucceeded(state, stations) {
+  testAirports = getAirports(stations);
+  var newState = cloneDeep(state);
+  return merge(newState, {
+    stations
+  });
+}
+
+function fetchStationsFailed(state) {
+  var newState = cloneDeep(state);
+  return merge(newState, {
+    stations: null,
+    airportsToSelect: null
+  });
+}
+
+function getAirports(stations) {
+  return stations.map(station=>new Airport(station.shortName,station.iata));
+}

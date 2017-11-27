@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "0.17.1",
     "bulma": "0.6.1",
     "classnames": "2.2.5",
     "lodash.clonedeep": "4.5.0",
@@ -16,7 +17,8 @@
     "react-dom": "16.0.0",
     "react-redux": "5.0.6",
     "react-scripts": "1.0.17",
-    "redux": "3.7.2"
+    "redux": "3.7.2",
+    "redux-saga": "0.16.0"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --indented-syntax src/ -o src/",
