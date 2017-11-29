@@ -7,7 +7,7 @@ function* fetchStations() {
     const stations = yield call(apifetchStations);
     yield put({type: FETCH_STATIONS_SUCCEEDED, stations})
   } catch (e) {
-    yield put(FETCH_STATIONS_FAILED);
+    yield put({type: FETCH_STATIONS_FAILED});
   }
 }
 
