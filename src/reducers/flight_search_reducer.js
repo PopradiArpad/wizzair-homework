@@ -1,5 +1,5 @@
 import moment from 'moment';
-import Airport from '../types/airport';
+import Station from '../types/station';
 import Input from '../types/input';
 import {
   SELECT_ORIGIN_AIRPORT,
@@ -14,35 +14,19 @@ import {
   FETCH_STATIONS_FAILED
 } from '../actions';
 
-// TODO restructure state
-// const defaultState = {
-//   //domain
-//   stations: null
-//   //app state
-//   departureDate: moment(),
-//   returnDate: null, //null means OneWay
-//   originAirport: null,
-//   destinationAirport: null,
-//   //ui state
-//   focusedInput: null, // null or an Input value
-//   selector: null,// null or an Selector value //one of null, DATE_RANGE_SELECTOR, AIRPORT_SELECTOR
-// };
-
 const defaultState = {
-  //assistant
+  //domain
+  stations: null,
+  //app state
   departureDate: moment(),
   returnDate: null, //null means OneWay
   originAirport: null,
   destinationAirport: null,
-  //view
-  focusedInput: null, // one of null, DEPARTURE_DATE, RETURN_DATE
+  //ui state
+  focusedInput: null, // null or an Input value
   showDateRangeSelector: false,
-  airportsToSelect: null,
-  //api
-  stations: null
+  airportsToSelect: null
 };
-
-let testAirports = null;
 
 export function flightSearchReducer(state = defaultState, action) {
   switch (action.type) {
@@ -73,18 +57,23 @@ export function flightSearchReducer(state = defaultState, action) {
 
 function selectOriginAirport(state) {
   return createNewState(state, {
-    airportsToSelect: testAirports,
+    airportsToSelect: getOriginAirports(state.stations),
     focusedInput: Input.ORIGIN_AIRPORT,
     showDateRangeSelector: false
   });
 }
 
 function selectDestinationAirport(state) {
-  return createNewState(state, {
-    airportsToSelect: testAirports,
-    focusedInput: Input.DESTINATION_AIRPORT,
-    showDateRangeSelector: false
-  });
+  return state.originAirport
+    ? createNewState(state, {
+        airportsToSelect: getDestinationAirports(
+          state.stations,
+          state.originAirport
+        ),
+        focusedInput: Input.DESTINATION_AIRPORT,
+        showDateRangeSelector: false
+      })
+    : state;
 }
 
 function airportSelected(state, airport) {
@@ -95,7 +84,8 @@ function airportSelected(state, airport) {
         case Input.ORIGIN_AIRPORT:
           return {
             originAirport: airport,
-            focusedInput: Input.DESTINATION_AIRPORT
+            focusedInput: Input.DESTINATION_AIRPORT,
+            airportsToSelect: getDestinationAirports(state.stations, airport)
           };
         case Input.DESTINATION_AIRPORT:
           return {
@@ -145,33 +135,43 @@ function changeDate(state, departureDate, returnDate) {
 }
 
 function fetchStationsSucceeded(state, stations) {
-  testAirports = getAirports(stations);
-  return createNewState(state, { stations });
+  throw new Error(
+    'createStations from JSON into [Station] is not implemented!'
+  );
+  // return createNewState(state, { stations: createStations(stations) });
 }
 
 function fetchStationsFailed(state) {
   console.log('fetchStationsFailed using a fake station list');
   const fakeStations = [
-    new Airport('Aberdeen', 'ABZ'),
-    new Airport('Alesund', 'AES'),
-    new Airport('Bari', 'BRI'),
-    new Airport('Bergen', 'BGO'),
-    new Airport('Budapest', 'BUD'),
-    new Airport('Bristol', 'BRS'),
-    new Airport('Brno', 'BRQ'),
-    new Airport('Debrecen', 'DEB'),
-    new Airport('Malaga', 'AGP'),
-    new Airport('Milan', 'BGY')
+    new Station('Aberdeen', 'ABZ'),
+    new Station('Alesund', 'AES'),
+    new Station('Bari', 'BRI'),
+    new Station('Bergen', 'BGO'),
+    new Station('Budapest', 'BUD'),
+    new Station('Bristol', 'BRS'),
+    new Station('Brno', 'BRQ'),
+    new Station('Debrecen', 'DEB'),
+    new Station('Malaga', 'AGP'),
+    new Station('Milan', 'BGY')
   ];
-  testAirports = getAirports(fakeStations);
   return createNewState(state, {
     stations: fakeStations,
     airportsToSelect: null
   });
 }
 
-function getAirports(stations) {
-  return stations.map(station => new Airport(station.shortName, station.iata));
+function getOriginAirports(stations) {
+  return stations.map(station => station.airport);
+}
+
+function getDestinationAirports(stations, originAirport) {
+  return stations.reduce((destinationAirports, station) => {
+    const airport = station.airport;
+    return airport.isEqual(originAirport)
+      ? destinationAirports
+      : destinationAirports.concat(airport);
+  }, []);
 }
 
 function createNewState(oldObject, newValues) {

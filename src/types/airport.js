@@ -1,21 +1,32 @@
 import PropTypes from 'prop-types';
 
-export default function Airport(shortName, iata) {
-  this.shortName = shortName;
-  this.iata = iata;
+export default class Airport {
+  constructor(shortName, iata) {
+    this.shortName = shortName;
+    this.iata = iata;
+  }
+
+  isEqual(obj) {
+    return (
+      !!obj.constructor &&
+      obj.constructor === Airport &&
+      this.shortName === obj.shortName &&
+      this.iata === obj.iata
+    );
+  }
 }
 
 function isAirport(val) {
   return (
-    typeof val === 'object' &&
-    !! val && // to filter out null, because typeof null is 'object'
+    !!val.constructor &&
+    val.constructor === Airport &&
     typeof val.shortName === 'string' &&
     typeof val.iata === 'string'
   );
 }
 
 function isAirportOrNull(val) {
-  return (val === null) || isAirport(val);
+  return val === null || isAirport(val);
 }
 
 Airport.PropType = function AirportPropType(props, propName, componentName) {
