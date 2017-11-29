@@ -64,3 +64,12 @@ Airport.ArrayPropType = PropTypes.arrayOf(function(
     );
   }
 });
+
+//It creates an Airport instance.
+//It throws an Error if obj is not appropriate
+Airport.createFromObject = function(obj) {
+  if (!(obj.shortName !== undefined && obj.iata !== undefined)) {
+    throw new TypeError();
+  }
+  return new Airport(obj.shortName, obj.iata);
+};
