@@ -51,5 +51,28 @@ describe('Airport persistency', () => {
         destinationAirport: new Airport('Debrecen', 'DEB')
       });
     });
+
+    it('it works if there is only originAirport', () => {
+      document.cookie =
+        '{"originAirport":{"shortName":"Budapest","iata":"BUD"}}';
+      const result = readAirportsFromCookie();
+      expect(result).toEqual({
+        originAirport: new Airport('Budapest', 'BUD')
+      });
+    });
+
+    it('it works if there is only originAirport', () => {
+      document.cookie =
+        '{"destinationAirport":{"shortName":"Budapest","iata":"BUD"}}';
+      const result = readAirportsFromCookie();
+      expect(result).toEqual({
+        destinationAirport: new Airport('Budapest', 'BUD')
+      });
+    });
+
+    it('it works if there is no originAirport or destinationAirport', () => {
+      const result = readAirportsFromCookie();
+      expect(result).toEqual({});
+    });
   });
 });

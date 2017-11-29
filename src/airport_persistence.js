@@ -1,3 +1,5 @@
+import Airport from './types/airport';
+
 export function readAirportsFromCookie() {
   try {
     const json = JSON.parse(document.cookie);
@@ -13,7 +15,8 @@ export function readAirportsFromCookie() {
 
 function tryCreateAirportFromObject(obj) {
   try {
-    return Airport.createFromObject(json.originAirport);
+    const airport = Airport.createFromObject(obj);
+    return  airport;
   } catch (e) {
     return undefined;
   }
