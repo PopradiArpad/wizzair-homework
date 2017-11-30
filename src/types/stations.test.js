@@ -60,22 +60,6 @@ describe('Stations', () => {
   });
 });
 
-// describe('createStations', () => {
-//   it('creates a list of Stations for valid format', () => {
-//     const stations = createStations(json);
-//     expect(stations).toEqual([
-//       new Station('Tirana', 'TIA', ['BUD', 'LTN']),
-//       new Station('Baku', 'GYD', ['BUD']),
-//       new Station('Brussels Charleroi', 'CRL', ['WAW', 'BUD', 'CLJ'])
-//     ]);
-//   });
-//
-//   it('creates an empty list for valid format', () => {
-//     const stations = createStations('hehe');
-//     expect(stations).toEqual([]);
-//   });
-// });
-
 const json = JSON.stringify([
   {
     iata: 'TIA',
