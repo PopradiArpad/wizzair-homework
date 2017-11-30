@@ -2,7 +2,7 @@ import {
   readAirportsFromCookie,
   writeAirportsToCookie
 } from './airport_persistence';
-import Airport from './types/airport';
+import Airport from '../types/airport';
 
 describe('Airport persistency', () => {
   beforeEach(() => {
@@ -42,7 +42,7 @@ describe('Airport persistency', () => {
   });
 
   describe('readAirportsFromCookie', () => {
-    it('it works if there is originAirport and destinationAirport', () => {
+    it('it works if there are originAirport and destinationAirport', () => {
       document.cookie =
         '{"originAirport":{"shortName":"Budapest","iata":"BUD"},"destinationAirport":{"shortName":"Debrecen","iata":"DEB"}}';
       const result = readAirportsFromCookie();
@@ -57,7 +57,8 @@ describe('Airport persistency', () => {
         '{"originAirport":{"shortName":"Budapest","iata":"BUD"}}';
       const result = readAirportsFromCookie();
       expect(result).toEqual({
-        originAirport: new Airport('Budapest', 'BUD')
+        originAirport: new Airport('Budapest', 'BUD'),
+        destinationAirport: null
       });
     });
 
@@ -66,13 +67,17 @@ describe('Airport persistency', () => {
         '{"destinationAirport":{"shortName":"Budapest","iata":"BUD"}}';
       const result = readAirportsFromCookie();
       expect(result).toEqual({
+        originAirport: null,
         destinationAirport: new Airport('Budapest', 'BUD')
       });
     });
 
     it('it works if there is no originAirport or destinationAirport', () => {
       const result = readAirportsFromCookie();
-      expect(result).toEqual({});
+      expect(result).toEqual({
+        originAirport: null,
+        destinationAirport: null
+      });
     });
   });
 });

@@ -1,24 +1,29 @@
-import Airport from './types/airport';
+import Airport from '../types/airport';
 
 export function readAirportsFromCookie() {
+  let result = {
+    originAirport: null,
+    destinationAirport: null
+  };
+
   try {
     const json = JSON.parse(document.cookie);
-    const originAirport = tryCreateAirportFromObject(json.originAirport);
-    const destinationAirport = tryCreateAirportFromObject(
+    result.originAirport = tryCreateAirportFromObject(json.originAirport);
+    result.destinationAirport = tryCreateAirportFromObject(
       json.destinationAirport
     );
-    return { originAirport, destinationAirport };
   } catch (e) {
-    return {};
+  } finally {
+    return result;
   }
 }
 
 function tryCreateAirportFromObject(obj) {
   try {
     const airport = Airport.createFromObject(obj);
-    return  airport;
+    return airport;
   } catch (e) {
-    return undefined;
+    return null;
   }
 }
 

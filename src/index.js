@@ -9,13 +9,14 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import sagas from './sagas/sagas';
 import {FETCH_STATIONS} from './actions';
+import saveAirportsMiddleware from './airport_persistence/save_airports_middleware';
 
 const sagaMiddleware = createSagaMiddleware();
 
 let store = createStore(
   flightSearchReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(sagaMiddleware)
+  applyMiddleware(saveAirportsMiddleware,sagaMiddleware)
 );
 
 sagaMiddleware.run(sagas);

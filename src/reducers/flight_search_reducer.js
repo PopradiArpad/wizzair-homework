@@ -13,6 +13,9 @@ import {
   FETCH_STATIONS_SUCCEEDED,
   FETCH_STATIONS_FAILED
 } from '../actions';
+import { readAirportsFromCookie } from '../airport_persistence/airport_persistence';
+
+const airportsFromCookie = readAirportsFromCookie();
 
 const defaultState = {
   //domain
@@ -20,8 +23,8 @@ const defaultState = {
   //app state
   departureDate: moment(),
   returnDate: null, //null means OneWay
-  originAirport: null,
-  destinationAirport: null,
+  originAirport: airportsFromCookie.originAirport,
+  destinationAirport: airportsFromCookie.destinationAirport,
   //ui state
   focusedInput: null, // null or an Input value
   showDateRangeSelector: false,
