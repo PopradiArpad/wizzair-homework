@@ -18,12 +18,13 @@ export class DateRangeSelector extends Component {
 
   isDayBlocked = day => {
     const props = this.props;
+    const today = moment();
 
     if (props.focusedInput === Input.DEPARTURE_DATE) {
-      return isBeforeToday(day);
+      return isBefore(day, today);
     }
 
-    return day < props.departureDate || isBeforeToday(day);
+    return day < props.departureDate || isBefore(day, today);
   };
 
   render() {
@@ -79,22 +80,19 @@ DateRangeSelector.propTypes = {
   onCloseDateRangeSelector: PropTypes.func.isRequired
 };
 
-function isBeforeToday(day) {
-  const now = moment();
-  return now.diff(day, 'days') > 0;
-  //Probably this is better:
-  // if (!moment.isMoment(a) || !moment.isMoment(b)) return false;
-  //
-  // const aYear = a.year();
-  // const aMonth = a.month();
-  //
-  // const bYear = b.year();
-  // const bMonth = b.month();
-  //
-  // const isSameYear = aYear === bYear;
-  // const isSameMonth = aMonth === bMonth;
-  //
-  // if (isSameYear && isSameMonth) return a.date() < b.date();
-  // if (isSameYear) return aMonth < bMonth;
-  // return aYear < bYear;
+function isBefore(a, b) {
+  if (!moment.isMoment(a) || !moment.isMoment(b)) return false;
+
+  const aYear = a.year();
+  const aMonth = a.month();
+
+  const bYear = b.year();
+  const bMonth = b.month();
+
+  const isSameYear = aYear === bYear;
+  const isSameMonth = aMonth === bMonth;
+
+  if (isSameYear && isSameMonth) return a.date() < b.date();
+  if (isSameYear) return aMonth < bMonth;
+  return aYear < bYear;
 }
