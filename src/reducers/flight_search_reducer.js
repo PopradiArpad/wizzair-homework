@@ -1,5 +1,5 @@
 import moment from 'moment';
-import Station from '../types/station';
+import { createStations } from '../types/station';
 import Input from '../types/input';
 import {
   SELECT_ORIGIN_AIRPORT,
@@ -138,28 +138,14 @@ function changeDate(state, departureDate, returnDate) {
 }
 
 function fetchStationsSucceeded(state, stations) {
-  throw new Error(
-    'createStations from JSON into [Station] is not implemented!'
-  );
-  // return createNewState(state, { stations: createStations(stations) });
+  return createNewState(state, { stations: createStations(stations) });
 }
 
 function fetchStationsFailed(state) {
   console.log('fetchStationsFailed using a fake station list');
-  const fakeStations = [
-    new Station('Aberdeen', 'ABZ'),
-    new Station('Alesund', 'AES'),
-    new Station('Bari', 'BRI'),
-    new Station('Bergen', 'BGO'),
-    new Station('Budapest', 'BUD'),
-    new Station('Bristol', 'BRS'),
-    new Station('Brno', 'BRQ'),
-    new Station('Debrecen', 'DEB'),
-    new Station('Malaga', 'AGP'),
-    new Station('Milan', 'BGY')
-  ];
+  const fakeStations = require('./fake_stations');
   return createNewState(state, {
-    stations: fakeStations,
+    stations: createStations(fakeStations),
     airportsToSelect: null
   });
 }
