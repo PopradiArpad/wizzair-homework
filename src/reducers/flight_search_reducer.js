@@ -145,7 +145,7 @@ function fetchStationsFailed(state) {
   console.log('fetchStationsFailed using a fake station list');
   const fakeStations = require('./fake_stations');
   return createNewState(state, {
-    stations: createStations(fakeStations),
+    stations: createStations(fakeStations.default),
     airportsToSelect: null
   });
 }
