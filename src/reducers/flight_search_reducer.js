@@ -21,14 +21,14 @@ const defaultState = {
   //domain
   stations: null,
   //app state
-  originAirport: airportsFromCookie.originAirport,
-  destinationAirport: airportsFromCookie.destinationAirport,
-  departureDate: moment(),
-  returnDate: null, //null means OneWay
+  originAirport: airportsFromCookie.originAirport, // type Airport or null
+  destinationAirport: airportsFromCookie.destinationAirport, // type Airport or null
+  departureDate: moment(), // type Moment or null
+  returnDate: null, //null means OneWay // type Moment or null
   //ui state
-  focusedInput: null, // null or an Input value
+  focusedInput: null, // type Input value or null
   showDateRangeSelector: false,
-  airportsToSelect: null,
+  airportsToSelect: [], // type [Airport]
   searchEnabled: false
 };
 
