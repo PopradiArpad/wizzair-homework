@@ -14,6 +14,7 @@ import {
   FETCH_STATIONS_FAILED
 } from '../actions';
 import { readAirportsFromCookie } from '../airport_persistence/airport_persistence';
+import { createNewState } from './utils';
 
 const airportsFromCookie = readAirportsFromCookie();
 
@@ -158,10 +159,6 @@ function fetchStationsFailed(state) {
     stations: createStations(fakeStations.default),
     airportsToSelect: null
   });
-}
-
-function createNewState(oldObject, newValues) {
-  return Object.assign({}, oldObject, newValues);
 }
 
 function isSearchEnabled({
