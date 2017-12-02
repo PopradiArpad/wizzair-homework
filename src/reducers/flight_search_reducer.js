@@ -32,7 +32,7 @@ const defaultState = {
   searchEnabled: false
 };
 
-export function flightSearchReducer(state = defaultState, action) {
+export default function flightSearchReducer(state = defaultState, action) {
   //set the independent states
   const newState = flightSearchReducerI(state, action);
 
@@ -164,6 +164,18 @@ function createNewState(oldObject, newValues) {
   return Object.assign({}, oldObject, newValues);
 }
 
-function isSearchEnabled({ originAirport, destinationAirport, departureDate }) {
-  return !!originAirport &&  !!destinationAirport && !!departureDate;
+function isSearchEnabled({
+  originAirport,
+  destinationAirport,
+  departureDate,
+  showDateRangeSelector,
+  airportsToSelect
+}) {
+  return (
+    !!originAirport &&
+    !!destinationAirport &&
+    !!departureDate &&
+    !showDateRangeSelector &&
+    (airportsToSelect === null)
+  );
 }

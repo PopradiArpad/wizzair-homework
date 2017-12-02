@@ -84,16 +84,16 @@ const FlightSearchI = ({
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = ({flightSearch}) => {
   return {
-    departureDate: state.departureDate,
-    returnDate: state.returnDate,
-    showDateRangeSelector: state.showDateRangeSelector,
-    originAirport: state.originAirport,
-    destinationAirport: state.destinationAirport,
-    airportsToSelect: state.airportsToSelect,
-    focusedInput: state.focusedInput,
-    searchEnabled: state.searchEnabled
+    departureDate: flightSearch.departureDate,
+    returnDate: flightSearch.returnDate,
+    showDateRangeSelector: flightSearch.showDateRangeSelector,
+    originAirport: flightSearch.originAirport,
+    destinationAirport: flightSearch.destinationAirport,
+    airportsToSelect: flightSearch.airportsToSelect,
+    focusedInput: flightSearch.focusedInput,
+    searchEnabled: flightSearch.searchEnabled
   };
 };
 
