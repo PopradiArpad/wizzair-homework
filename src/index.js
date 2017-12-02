@@ -9,7 +9,6 @@ import flightSearch from './reducers/flight_search_reducer';
 import flightSelect from './reducers/flight_select_reducer';
 import createSagaMiddleware from 'redux-saga';
 import sagas from './sagas/sagas';
-import { FETCH_STATIONS } from './actions';
 import saveAirportsMiddleware from './airport_persistence/save_airports_middleware';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -30,5 +29,3 @@ ReactDOM.render(
 );
 
 registerServiceWorker();
-
-store.dispatch({ type: FETCH_STATIONS });
