@@ -102,7 +102,6 @@ function getSearchLinkPath(
   departureDate,
   returnDate
 ) {
-  // return '/select-flight/TIA/LTN/2018-06-12/2018-07-12';
   return `/select-flight/${getIataOrNull(originAirport)}/${getIataOrNull(destinationAirport)}/${getYYYY_MM_DDOrNull(departureDate)}/${getYYYY_MM_DDOrNull(returnDate)}`;
 }
 
