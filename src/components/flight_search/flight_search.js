@@ -33,13 +33,12 @@ const FlightSearchI = ({
   searchEnabled,
   onDatesChange,
   onCloseDateRangeSelector,
-  showDateRangeSelector,
-  ...rest
+  showDateRangeSelector
 }) => {
   const classes = classNames('waFlightSearch', className);
 
   return (
-    <div className={classes} {...rest}>
+    <div className={classes}>
       <h1 className="title">Flights</h1>
       <div className="columns">
         <div className="column is-one-third">

@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import './index.css';
 import { App } from './components/app';
 import registerServiceWorker from './registerServiceWorker';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import flightSearch from './reducers/flight_search_reducer';
-import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import sagas from './sagas/sagas';
 import { FETCH_STATIONS } from './actions';

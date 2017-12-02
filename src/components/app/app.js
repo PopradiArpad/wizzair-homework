@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router,Route, Switch } from 'react-router-dom';
 import { FlightSearch } from '../flight_search';
+import { FlightSelect } from '../flight_select';
 
 export class App extends Component {
   render() {
     return (
-      <div className="waApp">
-        <header className="waApp__header" />
-        <FlightSearch />
-      </div>
+      <Router>
+        <div className="waApp">
+          <header className="waApp__header" />
+          <div>
+            <Switch>
+              <Route exact path="/" component={FlightSearch}/>
+              <Route path="/select-flight/:originAirport/:destinationAirport/:departureDate/:returnDate" component={FlightSelect}/>
+            </Switch>
+          </div>
+        </div>
+      </Router>
     );
   }
 }
