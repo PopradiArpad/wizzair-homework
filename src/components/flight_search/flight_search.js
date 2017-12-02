@@ -30,6 +30,7 @@ const FlightSearchI = ({
   onAirportSelected,
   onCloseAirportSelector,
   focusedInput,
+  searchEnabled,
   onDatesChange,
   onCloseDateRangeSelector,
   showDateRangeSelector,
@@ -57,7 +58,7 @@ const FlightSearchI = ({
             focusedInput={focusedInput}
           />
           <div>
-            <button className="button is-primary is-large">Search</button>
+            <button disabled={!searchEnabled} className="button is-primary is-large">Search</button>
           </div>
         </div>
         <div className="column">
@@ -91,7 +92,8 @@ const mapStateToProps = state => {
     originAirport: state.originAirport,
     destinationAirport: state.destinationAirport,
     airportsToSelect: state.airportsToSelect,
-    focusedInput: state.focusedInput
+    focusedInput: state.focusedInput,
+    searchEnabled: state.searchEnabled
   };
 };
 

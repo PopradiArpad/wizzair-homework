@@ -21,17 +21,28 @@ const defaultState = {
   //domain
   stations: null,
   //app state
-  departureDate: moment(),
-  returnDate: null, //null means OneWay
   originAirport: airportsFromCookie.originAirport,
   destinationAirport: airportsFromCookie.destinationAirport,
+  departureDate: moment(),
+  returnDate: null, //null means OneWay
   //ui state
   focusedInput: null, // null or an Input value
   showDateRangeSelector: false,
-  airportsToSelect: null
+  airportsToSelect: null,
+  searchEnabled: false
 };
 
 export function flightSearchReducer(state = defaultState, action) {
+  //set the independent states
+  const newState = flightSearchReducerI(state, action);
+
+  //set the dependent/derived states
+  return createNewState(newState, {
+    searchEnabled: isSearchEnabled(newState)
+  });
+}
+
+function flightSearchReducerI(state = defaultState, action) {
   switch (action.type) {
     case SELECT_ORIGIN_AIRPORT:
       return selectOriginAirport(state);
@@ -69,7 +80,9 @@ function selectOriginAirport(state) {
 function selectDestinationAirport(state) {
   return state.originAirport
     ? createNewState(state, {
-        airportsToSelect: state.stations.getConnectedAirportsOf(state.originAirport),
+        airportsToSelect: state.stations.getConnectedAirportsOf(
+          state.originAirport
+        ),
         focusedInput: Input.DESTINATION_AIRPORT,
         showDateRangeSelector: false
       })
@@ -149,4 +162,8 @@ function fetchStationsFailed(state) {
 
 function createNewState(oldObject, newValues) {
   return Object.assign({}, oldObject, newValues);
+}
+
+function isSearchEnabled({ originAirport, destinationAirport, departureDate }) {
+  return !!originAirport &&  !!destinationAirport && !!departureDate;
 }
