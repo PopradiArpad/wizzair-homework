@@ -1,6 +1,7 @@
 import React from 'react';
-import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 import { DepartureReturn } from '../departure_return';
 import { OriginDestination } from '../origin_destination';
 import { DateRangeSelector } from '../date_range_selector';
@@ -18,14 +19,14 @@ import {
 
 const FlightSearchI = ({
   className,
-  departureDate,
-  onDepartureLabelClick,
-  returnDate,
-  onReturnLabelClick,
   originAirport,
   onOriginAirportClick,
   destinationAirport,
   onDestinationAirportClick,
+  departureDate,
+  onDepartureLabelClick,
+  returnDate,
+  onReturnLabelClick,
   airportsToSelect,
   onAirportSelected,
   onCloseAirportSelector,
@@ -36,6 +37,12 @@ const FlightSearchI = ({
   showDateRangeSelector
 }) => {
   const classes = classNames('waFlightSearch', className);
+  const searchLinkPath = getSearchLinkPath(
+    originAirport,
+    destinationAirport,
+    departureDate,
+    returnDate
+  );
 
   return (
     <div className={classes}>
@@ -57,7 +64,13 @@ const FlightSearchI = ({
             focusedInput={focusedInput}
           />
           <div>
-            <button disabled={!searchEnabled} className="button is-primary is-large">Search</button>
+            <Link
+              className="button is-primary is-large"
+              to={searchLinkPath}
+              disabled={!searchEnabled}
+            >
+              Search
+            </Link>
           </div>
         </div>
         <div className="column">
@@ -83,13 +96,31 @@ const FlightSearchI = ({
   );
 };
 
-const mapStateToProps = ({flightSearch}) => {
+function getSearchLinkPath(
+  originAirport,
+  destinationAirport,
+  departureDate,
+  returnDate
+) {
+  // return '/select-flight/TIA/LTN/2018-06-12/2018-07-12';
+  return `/select-flight/${getIataOrNull(originAirport)}/${getIataOrNull(destinationAirport)}/${getYYYY_MM_DDOrNull(departureDate)}/${getYYYY_MM_DDOrNull(returnDate)}`;
+}
+
+function getIataOrNull(airport) {
+  return (!!airport && airport.iata) ? airport.iata : "null";
+}
+
+function getYYYY_MM_DDOrNull(date) {
+  return (!!date && date.format) ? date.format("YYYY-MM-DD") : "null";
+}
+
+const mapStateToProps = ({ flightSearch }) => {
   return {
+    originAirport: flightSearch.originAirport,
+    destinationAirport: flightSearch.destinationAirport,
     departureDate: flightSearch.departureDate,
     returnDate: flightSearch.returnDate,
     showDateRangeSelector: flightSearch.showDateRangeSelector,
-    originAirport: flightSearch.originAirport,
-    destinationAirport: flightSearch.destinationAirport,
     airportsToSelect: flightSearch.airportsToSelect,
     focusedInput: flightSearch.focusedInput,
     searchEnabled: flightSearch.searchEnabled
@@ -126,7 +157,7 @@ const mapDispatchToProps = dispatch => {
       dispatch({ type: SELECT_DESTINATION_AIRPORT });
     },
 
-    onAirportSelected: (airport) => {
+    onAirportSelected: airport => {
       dispatch({
         type: AIRPORT_SELECTED,
         airport
