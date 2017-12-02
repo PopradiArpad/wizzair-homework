@@ -6,7 +6,7 @@
     "axios": "0.17.1",
     "bulma": "0.6.1",
     "classnames": "2.2.5",
-    "lodash.clonedeep": "4.5.0",
+    "lodash.merge": "4.6.0",
     "lodash.omit": "4.5.0",
     "moment": "2.19.1",
     "node-sass-chokidar": "0.0.3",

@@ -1,6 +1,7 @@
 import moment from 'moment';
 import createStations from '../types/stations';
 import Input from '../types/input';
+import Travel from '../types/travel';
 import {
   SELECT_ORIGIN_AIRPORT,
   SELECT_DESTINATION_AIRPORT,
@@ -14,7 +15,7 @@ import {
   FETCH_STATIONS_FAILED
 } from '../actions';
 import { readAirportsFromCookie } from '../airport_persistence/airport_persistence';
-import { createNewState } from './utils';
+import { assignToNew, mergeToNew } from './utils';
 
 const airportsFromCookie = readAirportsFromCookie();
 
@@ -22,10 +23,12 @@ const defaultState = {
   //domain
   stations: null,
   //app state
-  originAirport: airportsFromCookie.originAirport, // type Airport or null
-  destinationAirport: airportsFromCookie.destinationAirport, // type Airport or null
-  departureDate: moment(), // type Moment or null
-  returnDate: null, //null means OneWay // type Moment or null
+  travel: new Travel(
+    airportsFromCookie.originAirport,
+    airportsFromCookie.destinationAirport,
+    moment(),
+    null
+  ),
   //ui state
   focusedInput: null, // type Input value or null
   showDateRangeSelector: false,
@@ -38,7 +41,7 @@ export default function flightSearchReducer(state = defaultState, action) {
   const newState = flightSearchReducerI(state, action);
 
   //set the dependent/derived states
-  return createNewState(newState, {
+  return assignToNew(newState, {
     searchEnabled: isSearchEnabled(newState)
   });
 }
@@ -71,7 +74,7 @@ function flightSearchReducerI(state = defaultState, action) {
 }
 
 function selectOriginAirport(state) {
-  return createNewState(state, {
+  return assignToNew(state, {
     airportsToSelect: state.stations.getAllAirports(),
     focusedInput: Input.ORIGIN_AIRPORT,
     showDateRangeSelector: false
@@ -79,11 +82,10 @@ function selectOriginAirport(state) {
 }
 
 function selectDestinationAirport(state) {
-  return state.originAirport
-    ? createNewState(state, {
-        airportsToSelect: state.stations.getConnectedAirportsOf(
-          state.originAirport
-        ),
+  const originAirport = state.travel.originAirport;
+  return originAirport
+    ? assignToNew(state, {
+        airportsToSelect: state.stations.getConnectedAirportsOf(originAirport),
         focusedInput: Input.DESTINATION_AIRPORT,
         showDateRangeSelector: false
       })
@@ -91,22 +93,25 @@ function selectDestinationAirport(state) {
 }
 
 function airportSelected(state, airport) {
-  return createNewState(
+  return assignToNew(
     state,
     (function() {
       switch (state.focusedInput) {
         case Input.ORIGIN_AIRPORT:
           return {
-            originAirport: airport,
+            travel: mergeToNew(state.travel, {
+              originAirport: airport,
+              destinationAirport: null
+            }),
             focusedInput: Input.DESTINATION_AIRPORT,
             airportsToSelect: state.stations.getConnectedAirportsOf(airport)
           };
         case Input.DESTINATION_AIRPORT:
           return {
-            destinationAirport: airport,
+            travel: mergeToNew(state.travel, { destinationAirport: airport }),
             focusedInput: Input.DEPARTURE_DATE,
             showDateRangeSelector: true,
-            airportsToSelect: null
+            airportsToSelect: []
           };
         default:
           return {};
@@ -116,22 +121,22 @@ function airportSelected(state, airport) {
 }
 
 function closeAirportSelector(state) {
-  return createNewState(state, {
-    airportsToSelect: null,
+  return assignToNew(state, {
+    airportsToSelect: [],
     focusedInput: null
   });
 }
 
 function selectDate(state, focusedInput) {
-  return createNewState(state, {
+  return assignToNew(state, {
     focusedInput,
     showDateRangeSelector: true,
-    airportsToSelect: null
+    airportsToSelect: []
   });
 }
 
 function closeDateRangeSelector(state) {
-  return createNewState(state, {
+  return assignToNew(state, {
     showDateRangeSelector: false,
     focusedInput: null
   });
@@ -141,30 +146,27 @@ function changeDate(state, departureDate, returnDate) {
   //Our state machine is this
   // after START_DATE it focuses to END_DATE and it stays in END_DATE
   const focusedInput = Input.RETURN_DATE;
-  return createNewState(state, {
-    departureDate,
-    returnDate,
+  return assignToNew(state, {
+    travel: mergeToNew(state.travel, { departureDate, returnDate }),
     focusedInput
   });
 }
 
 function fetchStationsSucceeded(state, stations) {
-  return createNewState(state, { stations: createStations(stations) });
+  return assignToNew(state, { stations: createStations(stations) });
 }
 
 function fetchStationsFailed(state) {
   console.log('fetchStationsFailed using a fake station list');
   const fakeStations = require('./fake_stations');
-  return createNewState(state, {
+  return assignToNew(state, {
     stations: createStations(fakeStations.default),
-    airportsToSelect: null
+    airportsToSelect: []
   });
 }
 
 function isSearchEnabled({
-  originAirport,
-  destinationAirport,
-  departureDate,
+  travel: { originAirport, destinationAirport, departureDate },
   showDateRangeSelector,
   airportsToSelect
 }) {
@@ -173,6 +175,6 @@ function isSearchEnabled({
     !!destinationAirport &&
     !!departureDate &&
     !showDateRangeSelector &&
-    (airportsToSelect === null)
+    airportsToSelect.length === 0
   );
 }

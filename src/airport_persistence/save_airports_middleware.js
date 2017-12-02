@@ -5,11 +5,11 @@ const saveAirportsMiddleware = ({ getState }) => next => action => {
   next(action);
 
   if (action.type === AIRPORT_SELECTED) {
-    const flightSearch = getState().flightSearch;
+    const travel = getState().flightSearch.travel;
 
     writeAirportsToCookie(
-      flightSearch.originAirport,
-      flightSearch.destinationAirport
+      travel.originAirport,
+      travel.destinationAirport
     );
   }
 };

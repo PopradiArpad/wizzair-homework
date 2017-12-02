@@ -26,13 +26,10 @@ class FlightSearchI extends Component {
   render() {
     const {
       className,
-      originAirport,
+      travel: { originAirport, destinationAirport, departureDate, returnDate },
       onOriginAirportClick,
-      destinationAirport,
       onDestinationAirportClick,
-      departureDate,
       onDepartureLabelClick,
-      returnDate,
       onReturnLabelClick,
       airportsToSelect,
       onAirportSelected,
@@ -124,10 +121,7 @@ function getYYYY_MM_DDOrNull(date) {
 
 const mapStateToProps = ({ flightSearch }) => {
   return {
-    originAirport: flightSearch.originAirport,
-    destinationAirport: flightSearch.destinationAirport,
-    departureDate: flightSearch.departureDate,
-    returnDate: flightSearch.returnDate,
+    travel: flightSearch.travel,
     showDateRangeSelector: flightSearch.showDateRangeSelector,
     airportsToSelect: flightSearch.airportsToSelect,
     focusedInput: flightSearch.focusedInput,

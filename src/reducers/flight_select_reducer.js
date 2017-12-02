@@ -4,7 +4,7 @@ import {
   FETCH_FLIGHTS_SUCCEEDED,
   FETCH_FLIGHTS_FAILED
 } from '../actions';
-import { createNewState } from './utils';
+import { assignToNew } from './utils';
 
 const FETCH = {
   DEPARTURE: 'DEPARTURE',
@@ -50,7 +50,7 @@ function resetFlightSelect(
   departureDate,
   returnDate
 ) {
-  return createNewState(defaultState, {
+  return assignToNew(defaultState, {
     originAirport,
     destinationAirport,
     departureDate,
