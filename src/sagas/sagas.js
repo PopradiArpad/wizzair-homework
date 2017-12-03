@@ -1,4 +1,4 @@
-import { all, call, put, takeLatest } from 'redux-saga/effects';
+import { all, call, put, takeLatest, takeEvery } from 'redux-saga/effects';
 import {
   FETCH_STATIONS,
   FETCH_STATIONS_SUCCEEDED,
@@ -19,6 +19,8 @@ function* fetchStations() {
 }
 
 function* fetchFlights(params) {
+  const fetchId = params.fetchId;
+
   try {
     const flights = yield call(
       apiFetchFlights,
@@ -26,9 +28,9 @@ function* fetchFlights(params) {
       params.arrivalIata,
       params.date
     );
-    yield put({ type: FETCH_FLIGHTS_SUCCEEDED, flights });
+    yield put({ type: FETCH_FLIGHTS_SUCCEEDED, flights, fetchId });
   } catch (e) {
-    yield put({ type: FETCH_FLIGHTS_FAILED });
+    yield put({ type: FETCH_FLIGHTS_FAILED, fetchId });
   }
 }
 
@@ -37,7 +39,7 @@ function* watchFetchStations() {
 }
 
 function* watchFetchFlights() {
-  yield takeLatest(FETCH_FLIGHTS, fetchFlights);
+  yield takeEvery(FETCH_FLIGHTS, fetchFlights);
 }
 
 // single entry point to start all Sagas at once

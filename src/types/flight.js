@@ -26,3 +26,7 @@ export default class Flight {
     this.flightServices = flightServices;
   }
 }
+
+export function createFlights(json) {
+  return json;
+}
