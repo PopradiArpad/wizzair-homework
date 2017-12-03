@@ -1,7 +1,7 @@
 import moment from 'moment';
 import createStations from '../types/stations';
 import Input from '../types/input';
-import Travel from '../types/travel';
+import { TravelAirport } from '../types/travel';
 import {
   SELECT_ORIGIN_AIRPORT,
   SELECT_DESTINATION_AIRPORT,
@@ -23,7 +23,7 @@ const defaultState = {
   //domain
   stations: null,
   //app state
-  travel: new Travel(
+  travel: new TravelAirport(
     airportsFromCookie.originAirport,
     airportsFromCookie.destinationAirport,
     moment(),

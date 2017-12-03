@@ -1,22 +1,20 @@
+import {TravelIata} from '../types/travel';
 import {
   RESET_FLIGHT_SELECT,
   FETCH_FLIGHTS,
   FETCH_FLIGHTS_SUCCEEDED,
   FETCH_FLIGHTS_FAILED
 } from '../actions';
-import { assignToNew } from './utils';
+import { assignToNew, mergeToNew } from './utils';
 
 const FETCH = {
-  DEPARTURE: 'DEPARTURE',
-  RETURN: 'RETURN'
+  TO: 'TO',
+  BACK: 'BACK'
 };
 
 const defaultState = {
   //domain
-  originAirport: null, // type Airport or null
-  destinationAirport: null, // type Airport or null
-  departureDate: null, // type Moment or null
-  returnDate: null, //null means OneWay // type Moment or null
+  travelIata: new TravelIata(null, null, null, null), // type Travel
   departureFlights: [], // type [Flight]
   returnFlights: [], // type [Flight]
   //app state
@@ -29,12 +27,8 @@ const defaultState = {
 export default function flightSelectReducer(state = defaultState, action) {
   switch (action.type) {
     case RESET_FLIGHT_SELECT:
-      return resetFlightSelect(
-        action.originAirport,
-        action.destinationAirport,
-        action.departureDate,
-        action.returnDate
-      );
+      //REMARK: see dispatch_middleware_for_flight_select too!
+      return resetFlightSelect(action.travel);
     // case FETCH_FLIGHTS_SUCCEEDED:
     //   return fetchFlightsSucceeded(state, action.flights);
     // case FETCH_FLIGHTS_FAILED:
@@ -44,16 +38,6 @@ export default function flightSelectReducer(state = defaultState, action) {
   }
 }
 
-function resetFlightSelect(
-  originAirport,
-  destinationAirport,
-  departureDate,
-  returnDate
-) {
-  return assignToNew(defaultState, {
-    originAirport,
-    destinationAirport,
-    departureDate,
-    returnDate
-  });
+function resetFlightSelect(travelIata) {
+  return assignToNew(defaultState, { travelIata, fetchingFor: FETCH.TO });
 }

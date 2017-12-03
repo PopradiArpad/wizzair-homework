@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
-import { FETCH_FLIGHTS } from '../../actions';
+import { RESET_FLIGHT_SELECT } from '../../actions';
+import { TravelIata } from '../../types/travel';
 
 class FlightSelectI extends Component {
   componentWillMount() {
     const params = this.props.match.params;
     this.props.onWillMount(
-      params.originAirport,
-      params.destinationAirport,
-      params.departureDate,
-      params.returnDate
+      new TravelIata(
+        params.originIata,
+        params.destinationIata,
+        params.departureDate,
+        params.returnDate
+      )
     );
   }
 
@@ -28,8 +31,8 @@ class FlightSelectI extends Component {
           </div>
           <div className="column">
             <h3>Flights</h3>
-            <h5>{params.originAirport}</h5>
-            <h5>{params.destinationAirport}</h5>
+            <h5>{params.originIata}</h5>
+            <h5>{params.destinationIata}</h5>
             <h5>{params.departureDate}</h5>
             <h5>{params.returnDate}</h5>
           </div>
@@ -45,18 +48,10 @@ const mapStateToProps = ({ flightSelect }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onWillMount: (
-      originAirport,
-      destinationAirport,
-      departureDate,
-      returnDate
-    ) => {
+    onWillMount: travel => {
       dispatch({
-        type: FETCH_FLIGHTS,
-        originAirport,
-        destinationAirport,
-        departureDate,
-        returnDate
+        type: RESET_FLIGHT_SELECT,
+        travel
       });
     }
   };

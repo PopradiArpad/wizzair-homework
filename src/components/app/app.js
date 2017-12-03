@@ -12,7 +12,7 @@ export class App extends Component {
           <div>
             <Switch>
               <Route exact path="/" component={FlightSearch}/>
-              <Route path="/select-flight/:originAirport/:destinationAirport/:departureDate/:returnDate" component={FlightSelect}/>
+              <Route path="/select-flight/:originIata/:destinationIata/:departureDate/:returnDate" component={FlightSelect}/>
             </Switch>
           </div>
         </div>

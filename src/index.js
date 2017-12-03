@@ -7,6 +7,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import flightSearch from './reducers/flight_search_reducer';
 import flightSelect from './reducers/flight_select_reducer';
+import dispatchForFlightSelectMiddleware from './reducers/dispatch_middleware_for_flight_select';
 import createSagaMiddleware from 'redux-saga';
 import sagas from './sagas/sagas';
 import saveAirportsMiddleware from './airport_persistence/save_airports_middleware';
@@ -16,7 +17,11 @@ const sagaMiddleware = createSagaMiddleware();
 let store = createStore(
   combineReducers({ flightSearch, flightSelect }),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(saveAirportsMiddleware, sagaMiddleware)
+  applyMiddleware(
+    saveAirportsMiddleware,
+    dispatchForFlightSelectMiddleware,
+    sagaMiddleware
+  )
 );
 
 sagaMiddleware.run(sagas);
