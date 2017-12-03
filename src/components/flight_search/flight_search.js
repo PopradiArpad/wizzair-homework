@@ -87,7 +87,7 @@ class FlightSearchI extends Component {
                 onCloseDateRangeSelector={onCloseDateRangeSelector}
               />
             )}
-            {airportsToSelect && (
+            {airportsToSelect.length > 0 && (
               <AirportSelector
                 airports={airportsToSelect}
                 onAirportSelected={onAirportSelected}
@@ -100,6 +100,7 @@ class FlightSearchI extends Component {
     );
   }
 }
+
 function getSearchLinkPath(
   originAirport,
   destinationAirport,
