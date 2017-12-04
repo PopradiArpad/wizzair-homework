@@ -27,28 +27,32 @@ class FlightSelectI extends Component {
       backFlights,
       selectedToFlight,
       selectedBackFlight,
-      match: { params: { returnDate } }
+      match: { params: { originIata, destinationIata, returnDate } }
     } = this.props;
 
     const classes = classNames('waFlightSelect', className);
-    const showBackFlights = returnDate!=='null';
+    const showBackFlights = returnDate !== 'null';
 
     return (
       <div className={classes}>
         <h1 className="title">Select Flights</h1>
         <div className="columns">
-          <div className="column is-one-third">
+          <div className="column is-one-fifth">
             <FlightSummary />
           </div>
           <div className="column">
             <FlightSelector
               flights={toFlights}
               selectedFlight={selectedToFlight}
+              from={originIata}
+              to={destinationIata}
             />
             {showBackFlights && (
               <FlightSelector
                 flights={backFlights}
                 selectedFlight={selectedBackFlight}
+                to={originIata}
+                from={destinationIata}
               />
             )}
             {!showBackFlights && <ReturnFlightSelector />}

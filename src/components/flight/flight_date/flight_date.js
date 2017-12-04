@@ -7,8 +7,7 @@ export const FlightDate = ({ className, date }) => {
 
   return (
     <div className={classes}>
-      <h4>FlightDate</h4>
-      <p>{date.format('ddd,DD MMM YYYY')}</p>
+      <p className='waFlightDate__date'>{date.format('ddd, DD MMM YYYY')} <time>{date.format('HH:MM')}</time></p>
     </div>
   );
 };

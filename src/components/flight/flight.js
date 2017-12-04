@@ -9,12 +9,16 @@ export const Flight = ({ className, flight }) => {
   let key = 0;
   return (
     <div className={classes}>
-      <h4>Flight</h4>
-      <FlightDate date={flight.departureTime} />
-      <FlightDate date={flight.returnTime} />
-      <div>
+      <div className="columns">
+        <div className="column">
+          <FlightDate date={flight.departureTime} />
+          {'->'}
+          <FlightDate date={flight.returnTime} />
+        </div>
         {flight.services.map(service => (
-          <FlightService key={key++} flightService={service} />
+          <div className="column" key={key++}>
+            <FlightService flightService={service} />
+          </div>
         ))}
       </div>
     </div>

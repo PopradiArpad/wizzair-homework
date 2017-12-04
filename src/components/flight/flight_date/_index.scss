@@ -1,2 +1,11 @@
 .waFlightDate {
 }
+
+.waFlightDate__date {
+  @extend .is-size-7;
+
+  time {
+    @extend .is-size-6;
+    @extend .has-text-weight-semibold;
+  }
+}

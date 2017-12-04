@@ -5,12 +5,13 @@ import classNames from 'classnames';
 export const FlightService = ({ className, flightService }) => {
   const classes = classNames('waFlightService', className);
 
+  if (flightService.remainingtickets === 0) {
+    return null;
+  }
+
   return (
     <div className={classes}>
-      <h4>FlightService</h4>
-      <p>{flightService.service}</p>
-      <p>{flightService.remainingtickets}</p>
-      <p>{flightService.price}</p>
+      <div className="waFlightService__price">{flightService.price}</div>
     </div>
   );
 };

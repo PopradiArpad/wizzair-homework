@@ -1,2 +1,15 @@
 .waFlightSelector {
 }
+
+.waFlightSelector__title {
+  @extend .title;
+  @extend .is-3;
+  background-color: $grey-lighter;
+}
+
+.waFlightSelector__service-title {
+  @extend .subtitle;
+  @extend .is-5;
+  background-color: $light;
+  padding: 1em;
+}
