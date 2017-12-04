@@ -16,7 +16,7 @@ export const FlightSelector = ({
   return (
     <div className={classes}>
       <h3 className="waFlightSelector__title">{`${from} -> ${to}`}</h3>
-      <div className="columns">
+      <div className="columns is-mobile">
         <div className="column" />
         {serviceTitle('BASIC')}
         {serviceTitle('WIZZ GO')}

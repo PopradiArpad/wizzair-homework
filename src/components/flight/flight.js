@@ -9,7 +9,7 @@ export const Flight = ({ className, flight }) => {
   let key = 0;
   return (
     <div className={classes}>
-      <div className="columns">
+      <div className="columns is-mobile">
         <div className="column">
           <FlightDate date={flight.departureTime} />
           {'->'}
