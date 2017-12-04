@@ -11,9 +11,7 @@ export const Flight = ({ className, flight }) => {
     <div className={classes}>
       <div className="columns is-mobile">
         <div className="column">
-          <FlightDate date={flight.departureTime} />
-          {'->'}
-          <FlightDate date={flight.returnTime} />
+          <FlightDate departureDate={flight.departureTime} arrivalDate={flight.returnTime} />
         </div>
         {flight.services.map(service => (
           <div className="column" key={key++}>

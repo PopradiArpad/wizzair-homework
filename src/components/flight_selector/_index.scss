@@ -1,6 +1,10 @@
 .waFlightSelector {
 }
 
+.waFlightSelector + .waFlightSelector {
+  margin-top: 5rem;
+}
+
 .waFlightSelector__title {
   @extend .title;
   @extend .is-3;

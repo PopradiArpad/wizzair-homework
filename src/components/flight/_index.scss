@@ -3,3 +3,7 @@
 
 .waFlight {
 }
+
+.waFlight + .waFlight {
+  margin-top: 2rem;
+}
