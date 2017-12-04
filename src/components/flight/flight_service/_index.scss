@@ -4,6 +4,20 @@
 .waFlightService__price {
   padding: 1em;
   border-color: $primary;
-  border-radius: .2em;
+  border-radius: 0.2em;
   border-style: solid;
+}
+
+.waFlightService--selected {
+  position: relative;
+
+  .waFlightService__price::before {
+    position: absolute;
+    left:2em;
+    content: "✓";
+    color: green;
+  }
+  .waFlightService__price {
+    border-color: red;
+  }
 }

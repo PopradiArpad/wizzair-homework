@@ -1,4 +1,5 @@
 import moment from 'moment';
+import LodashIsEqual from 'lodash.isequal';
 
 export const Service = {
   BASIC: 'basic',
@@ -31,6 +32,10 @@ export default class Flight {
     this.departureTime = moment(departureTime);
     this.returnTime = moment(returnTime);
     this.services = services;
+  }
+
+  isEqual(obj) {
+    return LodashIsEqual(this,obj);
   }
 }
 

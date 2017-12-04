@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
-import { RESET_FLIGHT_SELECT } from '../../actions';
+import { RESET_FLIGHT_SELECT, SELECT_FLIGHT } from '../../actions';
 import { TravelIata } from '../../types/travel';
 import { FlightSummary } from '../flight_summary';
 import { FlightSelector } from '../flight_selector';
@@ -27,6 +27,7 @@ class FlightSelectI extends Component {
       backFlights,
       selectedToFlight,
       selectedBackFlight,
+      onFlightSelected,
       match: { params: { originIata, destinationIata, returnDate } }
     } = this.props;
 
@@ -46,6 +47,7 @@ class FlightSelectI extends Component {
               selectedFlight={selectedToFlight}
               from={originIata}
               to={destinationIata}
+              onFlightSelected={onFlightSelected(true)}
             />
             {showBackFlights && (
               <FlightSelector
@@ -53,6 +55,7 @@ class FlightSelectI extends Component {
                 selectedFlight={selectedBackFlight}
                 to={originIata}
                 from={destinationIata}
+                onFlightSelected={onFlightSelected(false)}
               />
             )}
             {!showBackFlights && <ReturnFlightSelector />}
@@ -78,6 +81,15 @@ const mapDispatchToProps = dispatch => {
       dispatch({
         type: RESET_FLIGHT_SELECT,
         travel
+      });
+    },
+
+    onFlightSelected: isTo => (flight, service) => {
+      dispatch({
+        type: SELECT_FLIGHT,
+        flight,
+        service,
+        isTo
       });
     }
   };

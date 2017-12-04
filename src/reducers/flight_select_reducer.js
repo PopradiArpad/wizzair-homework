@@ -2,10 +2,11 @@ import { TravelIata } from '../types/travel';
 import {
   RESET_FLIGHT_SELECT,
   FETCH_FLIGHTS_SUCCEEDED,
-  FETCH_FLIGHTS_FAILED
+  FETCH_FLIGHTS_FAILED,
+  SELECT_FLIGHT
 } from '../actions';
 import { assignToNew } from './utils';
-import { createFlights } from '../types/flight';
+import { createFlights, SelectedFlight } from '../types/flight';
 import FETCH_ID from './fetch_id';
 
 const defaultState = {
@@ -31,6 +32,8 @@ export default function flightSelectReducer(state = defaultState, action) {
       return fetchFlightsSucceeded(state, action.flights, action.fetchId);
     case FETCH_FLIGHTS_FAILED:
       return fetchFlightsFailed(state, action.fetchId);
+    case SELECT_FLIGHT:
+      return selectFlight(state, action.flight, action.service, action.isTo);
     default:
       return state;
   }
@@ -64,4 +67,10 @@ function fetchFlightsFailed(state, fetchId) {
   const date = fetchId === FETCH_ID.TO ? travelIata.departureDate : travelIata.returnDate;
 
   return fetchFlightsSucceeded(state, getFakeFlightsFetch(date), fetchId);
+}
+
+function selectFlight(state, flight, service, isTo) {
+  return assignToNew(state, {
+    [isTo ? 'selectedToFlight' : 'selectedBackFlight']: new SelectedFlight(flight,service.service),
+  });
 }
