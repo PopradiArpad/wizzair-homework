@@ -60,9 +60,9 @@ function fetchFlightsFailed(state, fetchId) {
   //TODO: when api works adapt it to real failure handling
   console.log('fetchFlightsFailed using a fake flight list');
 
-  const createFakeFlights = require('./fake_flights').default;
+  const getFakeFlightsFetch = require('./fake_flights').default;
   const travelIata = state.travelIata;
   const date = fetchId === FETCH_ID.TO ? travelIata.departureDate : travelIata.returnDate;
 
-  return fetchFlightsSucceeded(state, createFakeFlights(date), fetchId);
+  return fetchFlightsSucceeded(state, getFakeFlightsFetch(date), fetchId);
 }

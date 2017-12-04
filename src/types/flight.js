@@ -1,32 +1,61 @@
+import moment from 'moment';
+
 export const Service = {
-  BASIC: 'BASIC',
-  WIZZGO: 'WIZZGO',
-  WIZZPLUS: 'WIZZPLUS'
+  BASIC: 'basic',
+  WIZZGO: 'wizzgo',
+  WIZZPLUS: 'wizzplus'
 };
 
-
-//type service is Service
-//type remainingTickets is number
-//type price string
-export class FlightService {
-  constructor(service, remainingTickets, price) {
-    this.service = service;
-    this.remainingTickets = remainingTickets;
-    this.price = price;
-  }
-}
-
-//type departureTime is Moment or null
-//type returnTime is Moment or null
-//type flightServices is [FlightService]
+//type departureTime is Moment
+//type returnTime is Moment
+//type services is
+// [
+//   {
+//     service: Service,
+//     remainingtickets: number,
+//     price: '21€'
+//   }
+// ]
 export default class Flight {
-  constructor(departureTime, returnTime, flightServices) {
-    this.departureTime = departureTime;
-    this.returnTime = returnTime;
-    this.flightServices = flightServices;
+  //type departureTime is Moment/momentable string
+  //type returnTime is Moment/momentable string
+  //type services is
+  // [
+  //   {
+  //     service: Service,
+  //     remainingtickets: number,
+  //     price: '21€'
+  //   }
+  // ]
+  constructor(departureTime, returnTime, services) {
+    this.departureTime = moment(departureTime);
+    this.returnTime = moment(returnTime);
+    this.services = services;
   }
 }
 
+//type flight is Flight
+//type service is Service
+export class SelectedFlight {
+  constructor(flight, service) {
+    this.flight = flight;
+    this.service = service;
+  }
+}
+
+//return type is [Flight]
 export function createFlights(json) {
-  return json;
+  try {
+    const flights = JSON.parse(json);
+    return flights.reduce((data, flight) => {
+      const obj = new Flight(
+        flight.departureTime,
+        flight.arrivalTime,
+        flight.services
+      );
+      return data.concat(obj);
+    }, []);
+  } catch (e) {
+    throw new TypeError('JSON format is not valid');
+  }
 }

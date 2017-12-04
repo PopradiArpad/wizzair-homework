@@ -153,16 +153,13 @@ function changeDate(state, departureDate, returnDate) {
 }
 
 function fetchStationsSucceeded(state, stations) {
-  return assignToNew(state, { stations: createStations(stations) });
+  return assignToNew(state, { stations: createStations(stations), airportsToSelect: [] });
 }
 
 function fetchStationsFailed(state) {
   console.log('fetchStationsFailed using a fake station list');
-  const fakeStations = require('./fake_stations');
-  return assignToNew(state, {
-    stations: createStations(fakeStations.default),
-    airportsToSelect: []
-  });
+  const fakeStationsFetch = require('./fake_stations').default;
+  return fetchStationsSucceeded(state, fakeStationsFetch);
 }
 
 function isSearchEnabled({
