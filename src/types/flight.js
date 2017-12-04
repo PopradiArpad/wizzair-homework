@@ -47,9 +47,12 @@ export class SelectedFlight {
     this.service = service;
   }
 
+  getSelectedService() {
+    return this.flight.services.find(serv => serv.service === this.service);
+  }
+
   getPrice() {
-    return this.flight.services.find(serv => serv.service === this.service)
-      .price;
+    return this.getSelectedService().price;
   }
 
   getPriceAsNumber() {
@@ -57,7 +60,7 @@ export class SelectedFlight {
   }
 
   getCurrency() {
-    return this.getPrice().slice(0,1);
+    return this.getPrice().slice(0, 1);
   }
 }
 

@@ -12,6 +12,8 @@ export const FlightSummary = ({
   return (
     <div className={classes}>
       {summary(selectedToFlight, selectedBackFlight)}
+      {flight(selectedToFlight)}
+      {flight(selectedBackFlight)}
     </div>
   );
 };
@@ -34,6 +36,36 @@ function summary(...selectedFlights) {
       </div>
     </div>
   );
+}
+
+function flight(selectedFlight) {
+  if (!selectedFlight) {
+    return null;
+  }
+
+  const flight = selectedFlight.flight;
+
+  return (
+    <div>
+    <div>
+    {time(flight.departureTime)}&rarr;{time(flight.returnTime)}
+    </div>
+      <div className="level">
+        <div className="level-left">{selectedFlight.service}</div>
+        <div className="level-right">
+          {selectedFlight.getSelectedService().price}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function day(date) {
+  return date.format('ddd, DD MMM YYYY');
+}
+
+function time(date) {
+  return date.format('HH:MM');
 }
 
 FlightSummary.propTypes = {
