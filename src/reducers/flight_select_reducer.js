@@ -82,7 +82,7 @@ function fetchFlightsFailed(state, fetchId) {
 
   return fetchFlightsSucceeded(
     state,
-    getFakeFlightsFetch(date, 'UNKNOWN AIRPORT', departureIata, 'UNKNOWN AIRPORT', arrivalIata),
+    getFakeFlightsFetch(date, departureIata, arrivalIata),
     fetchId
   );
 }
