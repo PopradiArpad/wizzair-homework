@@ -14,8 +14,8 @@ const defaultState = {
   toFlights: [], // type [Flight]
   backFlights: [], // type [Flight]
   //app state
-  selectedDepartureFlight: null, // type SelectedFlight or null
-  selectedReturnFlight: null, // type SelectedFlight or null
+  selectedToFlight: null, // type SelectedFlight or null
+  selectedBackFlight: null, // type SelectedFlight or null
   fetching: {
     [FETCH_ID.TO]: false,
     [FETCH_ID.BACK]: false

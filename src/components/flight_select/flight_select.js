@@ -21,18 +21,37 @@ class FlightSelectI extends Component {
   }
 
   render() {
-    const { className } = this.props;
+    const {
+      className,
+      toFlights,
+      backFlights,
+      selectedToFlight,
+      selectedBackFlight,
+      match: { params: { returnDate } }
+    } = this.props;
+
     const classes = classNames('waFlightSelect', className);
+    const showBackFlights = returnDate!=='null';
 
     return (
       <div className={classes}>
         <h1 className="title">Select Flights</h1>
         <div className="columns">
           <div className="column is-one-third">
-            <FlightSummary/>
+            <FlightSummary />
           </div>
           <div className="column">
-            <FlightSelector/>
+            <FlightSelector
+              flights={toFlights}
+              selectedFlight={selectedToFlight}
+            />
+            {showBackFlights && (
+              <FlightSelector
+                flights={backFlights}
+                selectedFlight={selectedBackFlight}
+              />
+            )}
+            {!showBackFlights && <ReturnFlightSelector />}
           </div>
         </div>
       </div>
@@ -41,7 +60,12 @@ class FlightSelectI extends Component {
 }
 
 const mapStateToProps = ({ flightSelect }) => {
-  return {};
+  return {
+    toFlights: flightSelect.toFlights,
+    backFlights: flightSelect.backFlights,
+    selectedToFlight: flightSelect.selectedToFlight,
+    selectedBackFlight: flightSelect.selectedBackFlight
+  };
 };
 
 const mapDispatchToProps = dispatch => {
