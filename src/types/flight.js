@@ -25,7 +25,7 @@ export default class Flight {
   //   {
   //     service: Service,
   //     remainingtickets: number,
-  //     price: '21€'
+  //     price: '€21'  currency is the first character
   //   }
   // ]
   constructor(departureTime, returnTime, services) {
@@ -35,7 +35,7 @@ export default class Flight {
   }
 
   isEqual(obj) {
-    return LodashIsEqual(this,obj);
+    return LodashIsEqual(this, obj);
   }
 }
 
@@ -45,6 +45,19 @@ export class SelectedFlight {
   constructor(flight, service) {
     this.flight = flight;
     this.service = service;
+  }
+
+  getPrice() {
+    return this.flight.services.find(serv => serv.service === this.service)
+      .price;
+  }
+
+  getPriceAsNumber() {
+    return parseFloat(this.getPrice().slice(1));
+  }
+
+  getCurrency() {
+    return this.getPrice().slice(0,1);
   }
 }
 

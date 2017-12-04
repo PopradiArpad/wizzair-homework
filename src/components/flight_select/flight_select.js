@@ -39,7 +39,10 @@ class FlightSelectI extends Component {
         <h1 className="title">Select Flights</h1>
         <div className="columns">
           <div className="column is-one-fifth">
-            <FlightSummary />
+            <FlightSummary
+              selectedToFlight={selectedToFlight}
+              selectedBackFlight={selectedBackFlight}
+            />
           </div>
           <div className="column">
             <FlightSelector

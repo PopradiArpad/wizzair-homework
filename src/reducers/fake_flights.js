@@ -9,17 +9,17 @@ export default function getFakeFlightsFetch(date) {
         {
           service: 'basic',
           remainingtickets: 10,
-          price: '11€'
+          price: '€11'
         },
         {
           service: 'wizzgo',
           remainingtickets: 20,
-          price: '21€'
+          price: '€21'
         },
         {
           service: 'wizzplus',
           remainingtickets: 30,
-          price: '31€'
+          price: '€31'
         }
       ]
     },
@@ -30,17 +30,17 @@ export default function getFakeFlightsFetch(date) {
         {
           service: 'basic',
           remainingtickets: 0,
-          price: '12€'
+          price: '€12'
         },
         {
           service: 'wizzgo',
           remainingtickets: 21,
-          price: '22€'
+          price: '€22'
         },
         {
           service: 'wizzplus',
           remainingtickets: 31,
-          price: '32€'
+          price: '€32'
         }
       ]
     }
