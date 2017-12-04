@@ -1,3 +1,4 @@
+import Airport from './airport';
 import moment from 'moment';
 import LodashIsEqual from 'lodash.isequal';
 
@@ -7,7 +8,9 @@ export const Service = {
   WIZZPLUS: 'wizzplus'
 };
 
+//type departureAirport is Airport
 //type departureTime is Moment
+//type arrivalAirport is Airport
 //type arrivalTime is Moment
 //type services is
 // [
@@ -18,8 +21,10 @@ export const Service = {
 //   }
 // ]
 export default class Flight {
-  //type departureTime is Moment/momentable string
-  //type arrivalTime is Moment/momentable string
+  //type departureAirport is Airport
+  //type departureTime is Moment
+  //type arrivalAirport is Airport
+  //type arrivalTime is Moment
   //type services is
   // [
   //   {
@@ -28,8 +33,16 @@ export default class Flight {
   //     price: '€21'  currency is the first character
   //   }
   // ]
-  constructor(departureTime, arrivalTime, services) {
+  constructor(
+    departureAirport,
+    departureTime,
+    arrivalAirport,
+    arrivalTime,
+    services,
+  ) {
+    this.departureAirport = departureAirport;
     this.departureTime = moment(departureTime);
+    this.arrivalAirport = arrivalAirport;
     this.arrivalTime = moment(arrivalTime);
     this.services = services;
   }
@@ -69,8 +82,12 @@ export function createFlights(json) {
   try {
     const flights = JSON.parse(json);
     return flights.reduce((data, flight) => {
+      const departureAirport = flight.departureAirport;
+      const arrivalAirport = flight.arrivalAirport;
       const obj = new Flight(
+        new Airport(departureAirport.shortName,departureAirport.iata),
         flight.departureTime,
+        new Airport(arrivalAirport.shortName,arrivalAirport.iata),
         flight.arrivalTime,
         flight.services
       );

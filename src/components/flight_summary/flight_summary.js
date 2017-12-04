@@ -47,9 +47,15 @@ function flight(selectedFlight) {
 
   return (
     <div>
-    <div>
-    {time(flight.departureTime)}&rarr;{time(flight.arrivalTime)}
-    </div>
+      <div>
+        {airport(flight.departureAirport)}-{airport(flight.arrivalAirport)}
+      </div>
+      <div>
+        {day(flight.departureTime)}
+      </div>
+      <div>
+        {time(flight.departureTime)}&rarr;{time(flight.arrivalTime)}
+      </div>
       <div className="level">
         <div className="level-left">{selectedFlight.service}</div>
         <div className="level-right">
@@ -58,6 +64,10 @@ function flight(selectedFlight) {
       </div>
     </div>
   );
+}
+
+function airport(airp) {
+  return `${airp.shortName}(${airp.iata})`;
 }
 
 function day(date) {

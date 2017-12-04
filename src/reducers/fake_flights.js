@@ -1,10 +1,18 @@
-export default function getFakeFlightsFetch(date) {
+export default function getFakeFlightsFetch(date,departureShortName,departureIata,arrivalShortName,arrivalIata) {
   const dateString = date.format('YYYY-MM-DD');
 
   return JSON.stringify([
     {
       departureTime: `${dateString}T10:11:00`,
       arrivalTime: `${dateString}T12:11:00`,
+      departureAirport: {
+        shortName:departureShortName,
+        iata:departureIata
+      },
+      arrivalAirport: {
+        shortName:arrivalShortName,
+        iata:arrivalIata
+      },
       services: [
         {
           service: 'basic',
@@ -26,6 +34,14 @@ export default function getFakeFlightsFetch(date) {
     {
       departureTime: `${dateString}T16:22:00`,
       arrivalTime: `${dateString}T18:22:00`,
+      departureAirport: {
+        shortName:departureShortName,
+        iata:departureIata
+      },
+      arrivalAirport: {
+        shortName:arrivalShortName,
+        iata:arrivalIata
+      },
       services: [
         {
           service: 'basic',

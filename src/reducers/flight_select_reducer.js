@@ -60,17 +60,38 @@ function fetchFlightsSucceeded(state, flights, fetchId) {
 }
 
 function fetchFlightsFailed(state, fetchId) {
-  console.log('fetchFlightsFailed using a fake flight list. TODO: when api works adapt it to real failure handling');
+  console.log(
+    'fetchFlightsFailed using a fake flight list. TODO: when api works adapt it to real failure handling'
+  );
 
   const getFakeFlightsFetch = require('./fake_flights').default;
   const travelIata = state.travelIata;
-  const date = fetchId === FETCH_ID.TO ? travelIata.departureDate : travelIata.returnDate;
 
-  return fetchFlightsSucceeded(state, getFakeFlightsFetch(date), fetchId);
+  let date;
+  let departureIata;
+  let arrivalIata;
+  if (fetchId === FETCH_ID.TO) {
+    date = travelIata.departureDate;
+    departureIata = travelIata.originIata;
+    arrivalIata = travelIata.destinationIata;
+  } else {
+    date = travelIata.returnDate;
+    departureIata = travelIata.destinationIata;
+    arrivalIata = travelIata.originIata;
+  }
+
+  return fetchFlightsSucceeded(
+    state,
+    getFakeFlightsFetch(date, 'UNKNOWN AIRPORT', departureIata, 'UNKNOWN AIRPORT', arrivalIata),
+    fetchId
+  );
 }
 
 function selectFlight(state, flight, service, isTo) {
   return assignToNew(state, {
-    [isTo ? 'selectedToFlight' : 'selectedBackFlight']: new SelectedFlight(flight,service.service),
+    [isTo ? 'selectedToFlight' : 'selectedBackFlight']: new SelectedFlight(
+      flight,
+      service.service
+    )
   });
 }
