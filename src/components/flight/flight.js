@@ -19,7 +19,7 @@ export const Flight = ({
         <div className="column">
           <FlightDate
             departureDate={flight.departureTime}
-            arrivalDate={flight.returnTime}
+            arrivalDate={flight.arrivalTime}
           />
         </div>
         {flight.services.map(service => (

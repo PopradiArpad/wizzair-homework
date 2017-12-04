@@ -8,7 +8,7 @@ export const Service = {
 };
 
 //type departureTime is Moment
-//type returnTime is Moment
+//type arrivalTime is Moment
 //type services is
 // [
 //   {
@@ -19,7 +19,7 @@ export const Service = {
 // ]
 export default class Flight {
   //type departureTime is Moment/momentable string
-  //type returnTime is Moment/momentable string
+  //type arrivalTime is Moment/momentable string
   //type services is
   // [
   //   {
@@ -28,9 +28,9 @@ export default class Flight {
   //     price: '€21'  currency is the first character
   //   }
   // ]
-  constructor(departureTime, returnTime, services) {
+  constructor(departureTime, arrivalTime, services) {
     this.departureTime = moment(departureTime);
-    this.returnTime = moment(returnTime);
+    this.arrivalTime = moment(arrivalTime);
     this.services = services;
   }
 

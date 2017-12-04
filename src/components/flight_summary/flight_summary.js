@@ -48,7 +48,7 @@ function flight(selectedFlight) {
   return (
     <div>
     <div>
-    {time(flight.departureTime)}&rarr;{time(flight.returnTime)}
+    {time(flight.departureTime)}&rarr;{time(flight.arrivalTime)}
     </div>
       <div className="level">
         <div className="level-left">{selectedFlight.service}</div>
