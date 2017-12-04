@@ -3,6 +3,9 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { RESET_FLIGHT_SELECT } from '../../actions';
 import { TravelIata } from '../../types/travel';
+import { FlightSummary } from '../flight_summary';
+import { FlightSelector } from '../flight_selector';
+import { ReturnFlightSelector } from '../return_flight_selector';
 
 class FlightSelectI extends Component {
   componentWillMount() {
@@ -18,23 +21,18 @@ class FlightSelectI extends Component {
   }
 
   render() {
-    const { className, match } = this.props;
+    const { className } = this.props;
     const classes = classNames('waFlightSelect', className);
-    const params = match.params;
 
     return (
       <div className={classes}>
         <h1 className="title">Select Flights</h1>
         <div className="columns">
           <div className="column is-one-third">
-            <h3>Summary</h3>
+            <FlightSummary/>
           </div>
           <div className="column">
-            <h3>Flights</h3>
-            <h5>{params.originIata}</h5>
-            <h5>{params.destinationIata}</h5>
-            <h5>{params.departureDate}</h5>
-            <h5>{params.returnDate}</h5>
+            <FlightSelector/>
           </div>
         </div>
       </div>
