@@ -57,8 +57,7 @@ function fetchFlightsSucceeded(state, flights, fetchId) {
 }
 
 function fetchFlightsFailed(state, fetchId) {
-  //TODO: when api works adapt it to real failure handling
-  console.log('fetchFlightsFailed using a fake flight list');
+  console.log('fetchFlightsFailed using a fake flight list. TODO: when api works adapt it to real failure handling');
 
   const getFakeFlightsFetch = require('./fake_flights').default;
   const travelIata = state.travelIata;

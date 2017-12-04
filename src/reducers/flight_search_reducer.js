@@ -157,7 +157,8 @@ function fetchStationsSucceeded(state, stations) {
 }
 
 function fetchStationsFailed(state) {
-  console.log('fetchStationsFailed using a fake station list');
+  console.log('fetchStationsFailed using a fake station list. TODO: when api works adapt it to real failure handling');
+  
   const fakeStationsFetch = require('./fake_stations').default;
   return fetchStationsSucceeded(state, fakeStationsFetch);
 }
