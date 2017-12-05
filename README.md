@@ -33,7 +33,7 @@ A megvalósításban semmilyen megkötés nincs, használhatsz bármilyen framew
 
 
 ## Installing
-After cloning this repository:
+After cloning this repository cd into the new directory and
 ```
 npm i
 npm run build-css
