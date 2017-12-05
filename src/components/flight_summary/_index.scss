@@ -1,3 +1,20 @@
 .waFlightSummary {
   margin-left: 1rem;
 }
+
+.waFlightSummary__flight + .waFlightSummary__flight {
+  margin-top: 2rem;
+}
+
+.waFlightSummary__airports {
+  @extend .is-size-7;
+}
+
+.waFlightSummary__date {
+  @extend .is-size-6;
+
+  time {
+    @extend .is-size-5;
+    @extend .has-text-weight-semibold;
+  }
+}

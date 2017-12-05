@@ -44,18 +44,17 @@ function flight(selectedFlight) {
   }
 
   const flight = selectedFlight.flight;
+  const departureTime = flight.departureTime;
+  const arrivalTime = flight.arrivalTime;
 
   return (
-    <div>
-      <div>
-        {airport(flight.departureAirport)}-{airport(flight.arrivalAirport)}
+    <div  className="waFlightSummary__flight">
+      <div className="waFlightSummary__airports">
+        {airport(flight.departureAirport)} - {airport(flight.arrivalAirport)}
       </div>
-      <div>
-        {day(flight.departureTime)}
-      </div>
-      <div>
-        {time(flight.departureTime)}&rarr;{time(flight.arrivalTime)}
-      </div>
+      {departureTime.isSame(arrivalTime, 'day')
+        ? sameDay(departureTime, arrivalTime)
+        : differentDay(departureTime, arrivalTime)}
       <div className="level">
         <div className="level-left">{selectedFlight.service}</div>
         <div className="level-right">
@@ -77,6 +76,26 @@ function day(date) {
 function time(date) {
   return date.format('HH:MM');
 }
+
+function sameDay(departureDate, arrivalDate) {
+  return (
+    <p className="waFlightSummary__date">
+      {day(departureDate)}<br/>
+      <time>{time(departureDate)}</time> &rarr; <time>{time(arrivalDate)}</time>
+    </p>
+  );
+}
+
+function differentDay(departureDate, arrivalDate) {
+  return (
+    <p className="waFlightSummary__date">
+      {day(departureDate)} <time>{time(departureDate)}</time><br/>
+      &rarr;<br/>
+      {day(arrivalDate)} <time>{time(arrivalDate)}</time>
+    </p>
+  );
+}
+
 
 FlightSummary.propTypes = {
   selectedToFlight: PropTypes.object,
