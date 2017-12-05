@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { RESET_FLIGHT_SELECT, SELECT_FLIGHT } from '../../actions';
 import { TravelIata } from '../../types/travel';
@@ -28,7 +29,7 @@ class FlightSelectI extends Component {
       selectedToFlight,
       selectedBackFlight,
       onFlightSelected,
-      match: { params: { returnDate } }
+      match: { params: { departureDate, returnDate } }
     } = this.props;
 
     const classes = classNames('waFlightSelect', className);
@@ -57,7 +58,7 @@ class FlightSelectI extends Component {
                 onFlightSelected={onFlightSelected(false)}
               />
             )}
-            {!showBackFlights && <ReturnFlightSelector />}
+            {!showBackFlights && <ReturnFlightSelector departureDate={moment(departureDate)}/>}
           </div>
         </div>
       </div>

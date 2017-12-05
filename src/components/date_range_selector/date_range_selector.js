@@ -21,10 +21,10 @@ export class DateRangeSelector extends Component {
     const today = moment();
 
     if (props.focusedInput === Input.DEPARTURE_DATE) {
-      return isBefore(day, today);
+      return day.isBefore(today,'day');
     }
 
-    return day < props.departureDate || isBefore(day, today);
+    return day.isSameOrBefore(today,'day') || day.isSameOrBefore(props.departureDate,'day');
   };
 
   render() {
@@ -79,20 +79,3 @@ DateRangeSelector.propTypes = {
   onDatesChange: PropTypes.func.isRequired,
   onCloseDateRangeSelector: PropTypes.func.isRequired
 };
-
-function isBefore(a, b) {
-  if (!moment.isMoment(a) || !moment.isMoment(b)) return false;
-
-  const aYear = a.year();
-  const aMonth = a.month();
-
-  const bYear = b.year();
-  const bMonth = b.month();
-
-  const isSameYear = aYear === bYear;
-  const isSameMonth = aMonth === bMonth;
-
-  if (isSameYear && isSameMonth) return a.date() < b.date();
-  if (isSameYear) return aMonth < bMonth;
-  return aYear < bYear;
-}

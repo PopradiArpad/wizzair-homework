@@ -1,2 +1,11 @@
 .waReturnFlightSelector {
+  @extend .level;
+}
+
+.waReturnFlightSelector__add_return_flight {
+  @extend .level-item;
+}
+
+.waReturnFlightSelector__show_return_flights {
+  @extend .level-item;
 }
