@@ -45,27 +45,21 @@ npm install -g serve
 serve -s build
 ```
 
-If the test server is down, the api calls are faked.
+If the test server is down the api calls are faked.
 The return format of the api http://78.24.185.27:8570/search?departureStation=IATA&arrivalStation=IATA&date=YYYY-MM-DD
 is guessed by me.
 
 ## Development
 It's created with __[create-react-app](https://github.com/facebookincubator/create-react-app)__.
-
-Start css creation with
-
+Start css creation:
 ```
 npm run watch-css
 ```
-Start the development server with
-
+Start the development server:
 ```
 npm run start
 ```
-
-## Test
-Run:
-
+Start Jest in watch mode:
 ```
 npm run test
 ```
