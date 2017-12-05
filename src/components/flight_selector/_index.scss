@@ -9,8 +9,10 @@
 
 .waFlightSelector__title {
   @extend .title;
-  @extend .is-3;
+  @extend .is-4;
   background-color: $grey-lighter;
+  padding-top: .5em;
+  padding-bottom: .5em;
 }
 
 .waFlightSelector__service-title {
