@@ -10,7 +10,7 @@ import 'react-dates/lib/css/_datepicker.css';
 export class ReturnFlightSelector extends Component {
   constructor() {
     super();
-    this.state = { date: null, focused: false };
+    this.state = { returnDate: null, focused: false };
   }
 
   showDayPicker = () => {
@@ -21,19 +21,22 @@ export class ReturnFlightSelector extends Component {
     const props = this.props;
     const today = moment();
 
-    return day.isSameOrBefore(today,'day') || day.isSameOrBefore(props.departureDate,'day');
+    return (
+      day.isSameOrBefore(today, 'day') ||
+      day.isSameOrBefore(props.departureDate, 'day')
+    );
   };
 
   render() {
-    const { className } = this.props;
+    const { className, onReturnDateSelected } = this.props;
     const classes = classNames('waReturnFlightSelector', className);
 
     return (
       <div className={classes}>
         <div className="waReturnFlightSelector__add_return_flight">
           <SingleDatePicker
-            date={this.state.date}
-            onDateChange={date => this.setState({ date })}
+            date={this.state.returnDate}
+            onDateChange={returnDate => this.setState({ returnDate })}
             focused={this.state.focused}
             onFocusChange={({ focused }) => this.setState({ focused })}
             isDayBlocked={this.isDayBlocked}
@@ -42,7 +45,13 @@ export class ReturnFlightSelector extends Component {
           />
         </div>
         <div className="waReturnFlightSelector__show_return_flights">
-          {'SHOW RETURN FLIGHTS'}
+          <button
+            className="button"
+            disabled={!this.state.returnDate}
+            onClick={() => onReturnDateSelected(this.state.returnDate)}
+          >
+            SHOW RETURN FLIGHTS
+          </button>
         </div>
       </div>
     );
@@ -51,5 +60,6 @@ export class ReturnFlightSelector extends Component {
 
 ReturnFlightSelector.propTypes = {
   className: PropTypes.string,
-  departureDate: momentPropTypes.momentObj
+  departureDate: momentPropTypes.momentObj,
+  onReturnDateSelected: PropTypes.func.isRequired
 };

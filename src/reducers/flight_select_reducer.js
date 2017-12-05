@@ -1,11 +1,12 @@
 import { TravelIata } from '../types/travel';
 import {
+  CHANGE_DATE,
   RESET_FLIGHT_SELECT,
   FETCH_FLIGHTS_SUCCEEDED,
   FETCH_FLIGHTS_FAILED,
   SELECT_FLIGHT
 } from '../actions';
-import { assignToNew } from './utils';
+import { assignToNew, mergeToNew } from './utils';
 import { createFlights, SelectedFlight } from '../types/flight';
 import FETCH_ID from './fetch_id';
 
@@ -18,6 +19,7 @@ const defaultState = {
   selectedToFlight: null, // type SelectedFlight or null
   selectedBackFlight: null, // type SelectedFlight or null
   fetching: {
+    //fetching happens in dispatch_middleware_for_flight_select triggered by this object
     [FETCH_ID.TO]: false,
     [FETCH_ID.BACK]: false
   }
@@ -34,13 +36,18 @@ export default function flightSelectReducer(state = defaultState, action) {
       return fetchFlightsFailed(state, action.fetchId);
     case SELECT_FLIGHT:
       return selectFlight(state, action.flight, action.service, action.isTo);
+    case CHANGE_DATE:
+      return changeDate(
+        state,
+        action.fromReturnDateSelector,
+        action.returnDate
+      );
     default:
       return state;
   }
 }
 
 function resetFlightSelect(travelIata) {
-  //fetching happens in dispatch_middleware_for_flight_select triggered by fetching
   return assignToNew(defaultState, {
     travelIata,
     fetching: {
@@ -93,5 +100,20 @@ function selectFlight(state, flight, service, isTo) {
       flight,
       service.service
     )
+  });
+}
+
+function changeDate(state, fromReturnDateSelector, returnDate) {
+  if (!fromReturnDateSelector) {
+    return state;
+  }
+
+  return assignToNew(state, {
+    travelIata: mergeToNew(state.travelIata, {
+      returnDate
+    }),
+    fetching: {
+      [FETCH_ID.BACK]: true
+    }
   });
 }

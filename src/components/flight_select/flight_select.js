@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { RESET_FLIGHT_SELECT, SELECT_FLIGHT } from '../../actions';
+import { CHANGE_DATE, RESET_FLIGHT_SELECT, SELECT_FLIGHT } from '../../actions';
 import { TravelIata } from '../../types/travel';
 import { FlightSummary } from '../flight_summary';
 import { FlightSelector } from '../flight_selector';
@@ -19,6 +19,15 @@ class FlightSelectI extends Component {
         params.returnDate
       )
     );
+  }
+
+  onReturnDateSelected = (returnDate) => {
+    const {
+      onDatesChange,
+      match: { params: { departureDate } }
+    } = this.props;
+
+    onDatesChange(moment(departureDate), moment(returnDate));
   }
 
   render() {
@@ -58,7 +67,12 @@ class FlightSelectI extends Component {
                 onFlightSelected={onFlightSelected(false)}
               />
             )}
-            {!showBackFlights && <ReturnFlightSelector departureDate={moment(departureDate)}/>}
+            {!showBackFlights && (
+              <ReturnFlightSelector
+                departureDate={moment(departureDate)}
+                onReturnDateSelected={this.onReturnDateSelected}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -90,6 +104,15 @@ const mapDispatchToProps = dispatch => {
         flight,
         service,
         isTo
+      });
+    },
+
+    onDatesChange: (departureDate, returnDate) => {
+      dispatch({
+        type: CHANGE_DATE,
+        departureDate,
+        returnDate,
+        fromReturnDateSelector: true
       });
     }
   };
