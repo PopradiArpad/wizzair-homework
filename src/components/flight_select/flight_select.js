@@ -29,7 +29,7 @@ class FlightSelectI extends Component {
     } = this.props;
 
     onDatesChange(moment(departureDate), moment(returnDate));
-    history.push(
+    history.replace(
       `/select-flight/${originIata}/${destinationIata}/${departureDate}/${returnDate.format(
         'YYYY-MM-DD'
       )}`
@@ -52,7 +52,7 @@ class FlightSelectI extends Component {
 
     return (
       <div className={classes}>
-        <h1 className="title">Select Flights</h1>
+        <h1 className="waFlightSelect__title">Select Flights</h1>
         <div className="columns">
           <div className="column is-one-fifth">
             <FlightSummary

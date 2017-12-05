@@ -50,7 +50,7 @@ class FlightSearchI extends Component {
 
     return (
       <div className={classes}>
-        <h1 className="title">Flights</h1>
+        <h1 className="waFlightSearch__title">Flights</h1>
         <div className="columns">
           <div className="column is-one-third">
             <OriginDestination

@@ -5,3 +5,8 @@
     margin-bottom: 1rem;
   }
 }
+
+.waFlightSearch__title {
+  @extend .title;
+  padding-top: 1em;
+}
