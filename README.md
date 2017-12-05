@@ -31,6 +31,19 @@ a date-et YYYY-MM-DD formában kell megadni
 A megvalósításban semmilyen megkötés nincs, használhatsz bármilyen frameworköt (annak örülünk, ha vue.js-ben készül el), extra libet, egyetlen kitétel lenne csak, hogy ES6-ban legyen a kód.
 
 
+## Installing
+After cloning this repository.
+```
+npm i
+npm run build-css
+npm run build
+```
+To run it from a local server install `serve` and run it:
+```
+npm install -g serve
+serve -s build
+```
+
 ## Development
 It's created with __[create-react-app](https://github.com/facebookincubator/create-react-app)__.
 
@@ -43,4 +56,11 @@ Start the development server with
 
 ```
 npm run start
+```
+
+## Test
+Run:
+
+```
+npm run test
 ```
