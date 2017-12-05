@@ -1,5 +1,6 @@
 # WizzAir homework
 
+## Specification
 Készíts egy oldalt, ahol egy kereső szerepel:
 2 select, amiből az induló és cél várost lehet kiválasztani
 azonos városokat nem lehet kiválasztani
@@ -32,7 +33,7 @@ A megvalósításban semmilyen megkötés nincs, használhatsz bármilyen framew
 
 
 ## Installing
-After cloning this repository.
+After cloning this repository:
 ```
 npm i
 npm run build-css
@@ -43,6 +44,10 @@ To run it from a local server install `serve` and run it:
 npm install -g serve
 serve -s build
 ```
+
+If the test server is down, the api calls are faked.
+The return format of the api http://78.24.185.27:8570/search?departureStation=IATA&arrivalStation=IATA&date=YYYY-MM-DD
+is guessed by me.
 
 ## Development
 It's created with __[create-react-app](https://github.com/facebookincubator/create-react-app)__.
