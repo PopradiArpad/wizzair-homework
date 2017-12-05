@@ -2,8 +2,11 @@
   margin-left: 1rem;
 }
 
-.waFlightSummary__flight + .waFlightSummary__flight {
+.waFlightSummary__flight + * {
   margin-top: 2rem;
+}
+
+.waFlightSummary__sum {
 }
 
 .waFlightSummary__airports {

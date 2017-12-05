@@ -11,9 +11,9 @@ export const FlightSummary = ({
 
   return (
     <div className={classes}>
-      {summary(selectedToFlight, selectedBackFlight)}
       {flight(selectedToFlight)}
       {flight(selectedBackFlight)}
+      {summary(selectedToFlight, selectedBackFlight)}
     </div>
   );
 };
@@ -28,7 +28,7 @@ function summary(...selectedFlights) {
   const currency = selectedFlights[0] ? selectedFlights[0].getCurrency() : '';
 
   return (
-    <div className="level">
+    <div className="level waFlightSummary__sum">
       <div className="level-left">Flights</div>
       <div className="level-right">
         {currency}
