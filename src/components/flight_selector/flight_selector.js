@@ -7,8 +7,6 @@ export const FlightSelector = ({
   className,
   flights,
   selectedFlight,
-  from,
-  to,
   onFlightSelected
 }) => {
   const classes = classNames('waFlightSelector', className);
@@ -16,9 +14,7 @@ export const FlightSelector = ({
 
   return (
     <div className={classes}>
-      <h3 className="waFlightSelector__title">
-        {from}&rarr;{to}
-      </h3>
+      {title(flights)}
       <div className="columns is-mobile">
         <div className="column" />
         {serviceTitle('BASIC')}
@@ -44,10 +40,22 @@ export const FlightSelector = ({
 FlightSelector.propTypes = {
   flights: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedFlight: PropTypes.object,
-  from: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
   onFlightSelected: PropTypes.func.isRequired
 };
+
+function title(flights) {
+  const flight = flights[0];
+
+  if (!flight) {
+    return null;
+  }
+
+  return (
+    <h3 className="waFlightSelector__title">
+      {flight.departureAirport.airportText()}&rarr;{flight.arrivalAirport.airportText()}
+    </h3>
+  );
+}
 
 function serviceTitle(text) {
   return (

@@ -28,7 +28,7 @@ class FlightSelectI extends Component {
       selectedToFlight,
       selectedBackFlight,
       onFlightSelected,
-      match: { params: { originIata, destinationIata, returnDate } }
+      match: { params: { returnDate } }
     } = this.props;
 
     const classes = classNames('waFlightSelect', className);
@@ -48,16 +48,12 @@ class FlightSelectI extends Component {
             <FlightSelector
               flights={toFlights}
               selectedFlight={selectedToFlight}
-              from={originIata}
-              to={destinationIata}
               onFlightSelected={onFlightSelected(true)}
             />
             {showBackFlights && (
               <FlightSelector
                 flights={backFlights}
                 selectedFlight={selectedBackFlight}
-                to={originIata}
-                from={destinationIata}
                 onFlightSelected={onFlightSelected(false)}
               />
             )}

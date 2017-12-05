@@ -14,6 +14,10 @@ export default class Airport {
       this.iata === obj.iata
     );
   }
+
+  airportText() {
+    return `${this.shortName}(${this.iata})`;
+  }
 }
 
 function isAirport(val) {

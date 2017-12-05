@@ -19,18 +19,22 @@ export const FlightSummary = ({
 };
 
 function summary(...selectedFlights) {
-  const sum = selectedFlights
-    .filter(e => e !== null)
-    .reduce(
-      (sum, selectedFlight) => sum + selectedFlight.getPriceAsNumber(),
-      0
-    );
+  const flights = selectedFlights.filter(e => e !== null);
+
+  if (flights.length === 0) {
+    return <div className="waFlightSummary__sum">{'Choose a flight!'}</div>;
+  }
+
+  const sum = flights.reduce(
+    (sum, selectedFlight) => sum + selectedFlight.getPriceAsNumber(),
+    0
+  );
   const currency = selectedFlights[0] ? selectedFlights[0].getCurrency() : '';
 
   return (
-    <div className="level waFlightSummary__sum">
-      <div className="level-left">Flights</div>
-      <div className="level-right">
+    <div className="level is-mobile waFlightSummary__sum">
+      <div className="level-item has-text-centered">Flights</div>
+      <div className="level-item has-text-centered">
         {currency}
         {sum}
       </div>
@@ -48,25 +52,24 @@ function flight(selectedFlight) {
   const arrivalTime = flight.arrivalTime;
 
   return (
-    <div  className="waFlightSummary__flight">
+    <div className="waFlightSummary__flight">
       <div className="waFlightSummary__airports">
-        {airport(flight.departureAirport)} - {airport(flight.arrivalAirport)}
+        {flight.departureAirport.airportText()} -{' '}
+        {flight.arrivalAirport.airportText()}
       </div>
       {departureTime.isSame(arrivalTime, 'day')
         ? sameDay(departureTime, arrivalTime)
         : differentDay(departureTime, arrivalTime)}
-      <div className="level">
-        <div className="level-left">{selectedFlight.service}</div>
-        <div className="level-right">
+      <div className="level is-mobile">
+        <div className="level-item has-text-centered">
+          {selectedFlight.service}
+        </div>
+        <div className="level-item has-text-centered">
           {selectedFlight.getSelectedService().price}
         </div>
       </div>
     </div>
   );
-}
-
-function airport(airp) {
-  return `${airp.shortName}(${airp.iata})`;
 }
 
 function day(date) {
@@ -80,7 +83,8 @@ function time(date) {
 function sameDay(departureDate, arrivalDate) {
   return (
     <p className="waFlightSummary__date">
-      {day(departureDate)}<br/>
+      {day(departureDate)}
+      <br />
       <time>{time(departureDate)}</time> &rarr; <time>{time(arrivalDate)}</time>
     </p>
   );
@@ -89,13 +93,13 @@ function sameDay(departureDate, arrivalDate) {
 function differentDay(departureDate, arrivalDate) {
   return (
     <p className="waFlightSummary__date">
-      {day(departureDate)} <time>{time(departureDate)}</time><br/>
-      &rarr;<br/>
+      {day(departureDate)} <time>{time(departureDate)}</time>
+      <br />
+      &rarr;<br />
       {day(arrivalDate)} <time>{time(arrivalDate)}</time>
     </p>
   );
 }
-
 
 FlightSummary.propTypes = {
   selectedToFlight: PropTypes.object,

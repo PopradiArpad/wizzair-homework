@@ -1,5 +1,6 @@
 .waFlightSummary {
   margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .waFlightSummary__flight + * {
@@ -7,6 +8,9 @@
 }
 
 .waFlightSummary__sum {
+  @extend .title;
+  @extend .is-4;
+  background-color: $grey-lighter;
 }
 
 .waFlightSummary__airports {
