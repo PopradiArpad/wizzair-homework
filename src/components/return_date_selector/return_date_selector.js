@@ -7,7 +7,7 @@ import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 
-export class ReturnFlightSelector extends Component {
+export class ReturnDateSelector extends Component {
   constructor() {
     super();
     this.state = { returnDate: null, focused: false };
@@ -29,11 +29,11 @@ export class ReturnFlightSelector extends Component {
 
   render() {
     const { className, onReturnDateSelected } = this.props;
-    const classes = classNames('waReturnFlightSelector', className);
+    const classes = classNames('waReturnDateSelector', className);
 
     return (
       <div className={classes}>
-        <div className="waReturnFlightSelector__add_return_flight">
+        <div className="waReturnDateSelector__add_return_flight">
           <SingleDatePicker
             date={this.state.returnDate}
             onDateChange={returnDate => this.setState({ returnDate })}
@@ -44,7 +44,7 @@ export class ReturnFlightSelector extends Component {
             numberOfMonths={1}
           />
         </div>
-        <div className="waReturnFlightSelector__show_return_flights">
+        <div className="waReturnDateSelector__show_return_flights">
           <button
             className="button"
             disabled={!this.state.returnDate}
@@ -58,7 +58,7 @@ export class ReturnFlightSelector extends Component {
   }
 }
 
-ReturnFlightSelector.propTypes = {
+ReturnDateSelector.propTypes = {
   className: PropTypes.string,
   departureDate: momentPropTypes.momentObj,
   onReturnDateSelected: PropTypes.func.isRequired

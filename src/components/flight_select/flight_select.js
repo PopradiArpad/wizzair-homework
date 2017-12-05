@@ -6,7 +6,7 @@ import { CHANGE_DATE, RESET_FLIGHT_SELECT, SELECT_FLIGHT } from '../../actions';
 import { TravelIata } from '../../types/travel';
 import { FlightSummary } from '../flight_summary';
 import { FlightSelector } from '../flight_selector';
-import { ReturnFlightSelector } from '../return_flight_selector';
+import { ReturnDateSelector } from '../return_date_selector';
 
 class FlightSelectI extends Component {
   componentWillMount() {
@@ -68,7 +68,7 @@ class FlightSelectI extends Component {
               />
             )}
             {!showBackFlights && (
-              <ReturnFlightSelector
+              <ReturnDateSelector
                 departureDate={moment(departureDate)}
                 onReturnDateSelected={this.onReturnDateSelected}
               />
