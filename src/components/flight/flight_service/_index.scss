@@ -13,11 +13,11 @@
 
   .waFlightService__price::before {
     position: absolute;
-    left:2em;
+    left:1em;
     content: "✓";
     color: green;
   }
-  
+
   .waFlightService__price {
     border-color: red;
   }

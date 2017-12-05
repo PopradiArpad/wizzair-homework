@@ -21,14 +21,20 @@ class FlightSelectI extends Component {
     );
   }
 
-  onReturnDateSelected = (returnDate) => {
+  onReturnDateSelected = returnDate => {
     const {
       onDatesChange,
-      match: { params: { departureDate } }
+      match: { params: { originIata, destinationIata, departureDate } },
+      history
     } = this.props;
 
     onDatesChange(moment(departureDate), moment(returnDate));
-  }
+    history.push(
+      `/select-flight/${originIata}/${destinationIata}/${departureDate}/${returnDate.format(
+        'YYYY-MM-DD'
+      )}`
+    );
+  };
 
   render() {
     const {
